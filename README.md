@@ -1,4 +1,4 @@
-# Get_That_Cheese
+# Get That Cheese
 ### A One Player Canvas Game
 
 It's night and the humans have gone to bed. You're a mouse and you're hungry for cheese crumbles, which the messy homeowners have all over their house. Go get it! Only problem is...the cats..and there's a lot of them trying get you before you get that cheese. You only have so much time to gobble all the cheese you can get your hands on so get busy.
