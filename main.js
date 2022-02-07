@@ -2,6 +2,7 @@
 const canvas = document.querySelector("#canvas")
 document.addEventListener("keydown", movementHandler)
 const scoreboard = document.querySelector("#scoreboard")
+const countdown = document.querySelector('#countdown')
 
 // set up the renderer
 const ctx = canvas.getContext("2d")
@@ -11,6 +12,20 @@ canvas.setAttribute("height", getComputedStyle(canvas)["height"])
 canvas.setAttribute("width", getComputedStyle(canvas)["width"])
 
 let gameLoopInterval = setInterval(gameLoop, 60)
+
+let newGameClock = 45
+countdown.innerText = newGameClock
+
+
+let gameTimer = setInterval(function() {
+  if (newGameClock == 0) {
+    //end game function tagged here
+    console.log('end game')
+  } else {
+  newGameClock -= 1;
+  countdown.innerText = newGameClock;
+  }
+}, 1000)
 
 let score = 0;
 
@@ -55,15 +70,19 @@ function detectWall() {
 
     if (leftWall) {
         console.log("left wall found")
+        mouse.x = 0
     }
     if (rightWall) {
         console.log("right wall found")
+        mouse.x = canvas.width - mouse.width
     }
     if (topWall) {
         console.log("top wall found")
+        mouse.y = 0
     }
     if (bottomWall) {
         console.log("bottom wall found")
+        mouse.y = canvas.height - mouse.height
     }
 }
 
