@@ -6,14 +6,17 @@ It's night and the humans have gone to bed. You're a mouse and you're hungry for
 ![](https://i.imgur.com/NMFtuvi.png)
 
 # MVP
-* Functional start/end menu - keeps track of last score, highest score, and has a button to start a new game
+* Functional start/end menu with a button to start new game
 * Moveable player used to collect squares
     * Keep track of number collected
-* Game map to travel through with different obstacles that will block movement
+* Game map to travel through
 * Timer that counts down, ends gameplay
-* Mouse hole at end of map - extra points given for time left on the clock
+* Mouse hole at end of map
 
 # Stretch Goals
+* Start/end menu keeps track of last score, highest score
+* Game map with different obstacles that will block movement
+* Mouse hole at end of map gives extra points for time left on the clock
 * Soundbite of "Get That Cheese" by Too $hort that plays whenever you get that cheese! -- or at the end game screen -- copyright issue?
 * Enemy cats that move along y-axis or x-axis and if touched, ends gameplay
     * AI cats to actively hunt down the mouse

@@ -1,0 +1,23 @@
+/* all linked up */
+h1 {
+    text-align: center;
+}
+
+canvas {
+    background-color: tan;
+    height: 500px;
+    width: 500px;
+    border: 5px solid blue;
+}
+
+#container {
+    background-color: red;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#scoreboard {
+    background-color: yellow;
+}
