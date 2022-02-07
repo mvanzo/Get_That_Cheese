@@ -5,10 +5,6 @@ const scoreboard = document.querySelector("#scoreboard")
 const countdown = document.querySelector('#countdown')
 const newGameButton = document.querySelector('#new-game-button')
 
-// variable state
-let newGameClock = 5
-let score = 0;
-
 // set up the renderer
 const ctx = canvas.getContext("2d")
 // set canvas size to be the same as window
@@ -16,10 +12,12 @@ const ctx = canvas.getContext("2d")
 canvas.setAttribute("height", getComputedStyle(canvas)["height"])
 canvas.setAttribute("width", getComputedStyle(canvas)["width"])
 
+// variable state
+let newGameClock = 5
+  countdown.innerText = newGameClock
+let score = 0;
+
 let gameLoopInterval = setInterval(gameLoop, 60)
-
-countdown.innerText = newGameClock
-
 
 
 
@@ -31,12 +29,16 @@ function startGame() {
     if (newGameClock == 0) {
       //end game function tagged here
       console.log('end game')
-      document.querySelector('.postgame-container').style.display = 'block'
+      timeOver();
     } else {
     newGameClock -= 1;
     countdown.innerText = newGameClock;
     }
   }, 1000)
+}
+
+function timeOver() {
+  document.querySelector('.postgame-container').style.display = 'block'
 }
 
 
