@@ -14,21 +14,23 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
 
 // variable state
 let newGameClock = 5
+  // clock countdown is within startGame function
   countdown.innerText = newGameClock
 let score = 0;
 
 let gameLoopInterval = setInterval(gameLoop, 60)
 
-
-
+//start game function with new game button
 newGameButton.addEventListener('click', startGame)
 
 function startGame() {
+  // hide display for home container
   document.querySelector('.home-container').style.display = 'none';
+  //countdown starts
   let gameTimer = setInterval(function() {
     if (newGameClock == 0) {
       console.log('end game');
-      //end game function tagged here
+      //end game function when time = 0
       timeIsUp();
       // clear interval of game timer function--no longer counting
       clearInterval(gameTimer);
@@ -45,7 +47,8 @@ function timeIsUp() {
   // display postgame container
   document.querySelector('.postgame-container').style.display = 'block';
   // show score from previous round
-  
+  document.querySelector('#final-tally').innerText = score
+  // new game button to start another game -- restart game loop function??
 }
 
 
