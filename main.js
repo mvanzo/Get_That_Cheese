@@ -3,6 +3,11 @@ const canvas = document.querySelector("#canvas")
 document.addEventListener("keydown", movementHandler)
 const scoreboard = document.querySelector("#scoreboard")
 const countdown = document.querySelector('#countdown')
+const newGameButton = document.querySelector('#new-game-button')
+
+// variable state
+let newGameClock = 5
+let score = 0;
 
 // set up the renderer
 const ctx = canvas.getContext("2d")
@@ -13,21 +18,27 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
 
 let gameLoopInterval = setInterval(gameLoop, 60)
 
-let newGameClock = 45
 countdown.innerText = newGameClock
 
 
-let gameTimer = setInterval(function() {
-  if (newGameClock == 0) {
-    //end game function tagged here
-    console.log('end game')
-  } else {
-  newGameClock -= 1;
-  countdown.innerText = newGameClock;
-  }
-}, 1000)
 
-let score = 0;
+
+newGameButton.addEventListener('click', startGame)
+
+function startGame() {
+  document.querySelector('.home-container').style.display = 'none';
+  let gameTimer = setInterval(function() {
+    if (newGameClock == 0) {
+      //end game function tagged here
+      console.log('end game')
+      document.querySelector('.postgame-container').style.display = 'block'
+    } else {
+    newGameClock -= 1;
+    countdown.innerText = newGameClock;
+    }
+  }, 1000)
+}
+
 
 const mouse = {
     x: 10,
@@ -156,3 +167,7 @@ function gameLoop() {
     foundCheese2()
     foundCheese3()
 }
+
+
+
+//clear home screen with start game button

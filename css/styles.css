@@ -25,3 +25,30 @@ canvas {
 #countdown {
     background-color: white;
 }
+
+.home-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background-color: grey;
+    text-align: center;
+    /* position: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+}
+
+.postgame-container {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background-color: yellow;
+    text-align: center;
+}
