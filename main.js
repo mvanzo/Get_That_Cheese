@@ -27,9 +27,11 @@ function startGame() {
   document.querySelector('.home-container').style.display = 'none';
   let gameTimer = setInterval(function() {
     if (newGameClock == 0) {
+      console.log('end game');
       //end game function tagged here
-      console.log('end game')
-      timeOver();
+      timeIsUp();
+      // clear interval of game timer function--no longer counting
+      clearInterval(gameTimer);
     } else {
     newGameClock -= 1;
     countdown.innerText = newGameClock;
@@ -37,9 +39,15 @@ function startGame() {
   }, 1000)
 }
 
-function timeOver() {
-  document.querySelector('.postgame-container').style.display = 'block'
+
+
+function timeIsUp() {
+  // display postgame container
+  document.querySelector('.postgame-container').style.display = 'block';
+  // show score from previous round
+  
 }
+
 
 
 const mouse = {
