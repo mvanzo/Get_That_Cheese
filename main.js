@@ -11,6 +11,9 @@ mouseImg.src = '/img/mouse.png';
 // cheese image upload
 const cheeseImg = new Image();
 cheeseImg.src = '/img/cheese.png';
+// mouse hole image upload
+const mouseHoleImg = new Image();
+mouseHoleImg.src = '/img/mouse-hole.png';
 
 // set up the renderer
 const ctx = canvas.getContext("2d")
@@ -35,7 +38,6 @@ function startGame() {
   //countdown starts
   let gameTimer = setInterval(function() {
     if (newGameClock == 1) {
-      console.log('end game');
       //end game function when time = 0
       timeIsUp();
       // clear interval of game timer function--no longer counting
@@ -77,6 +79,16 @@ function restartGame() {
   startGame();
 }
 
+const mouseHole = {
+  x: 540,
+  y: 410,
+  width: 80,
+  height: 80,
+  render: () => {
+    ctx.drawImage(mouseHoleImg, 0, 0, 578, 545, mouseHole.x, mouseHole.y, mouseHole.width, mouseHole.height);
+  }
+}
+
 const mouse = {
     x: 10,
     y: 10,
@@ -84,7 +96,7 @@ const mouse = {
     height: 62,
     render: () => {
         ctx.drawImage(mouseImg, 0, 0, 800, 566, mouse.x, mouse.y, mouse.width, mouse.height);
-    },
+    }
 }
 
 class Cheese {
@@ -131,6 +143,18 @@ function detectWall() {
     }
 }
 
+function foundHome() {
+  //fine tuned meeting point by 30px
+  const homeLeft = mouse.x + mouse.width >= mouseHole.x+30;
+  const homeRight = mouse.x <= mouseHole.x + mouseHole.width-30;
+  const homeTop = mouse.y + mouse.height >= mouseHole.y+30;
+  const homeBottom = mouse.y <= mouseHole.y + mouseHole.height-30;
+
+  if (homeLeft && homeRight && homeTop && homeBottom) {
+    console.log('found home!')
+  }
+}
+
 function foundCheese1() {
   const cheese1Left = mouse.x + mouse.width >= cheese1.x
   const cheese1Right = mouse.x <= cheese1.x + cheese1.width
@@ -138,7 +162,6 @@ function foundCheese1() {
   const cheese1Bottom = mouse.y <= cheese1.y + cheese1.height
 
   if (cheese1Left && cheese1Right && cheese1Top && cheese1Bottom) {
-        console.log("found the first random cheese");
         score += 1;
         scoreboard.innerText = score;
         console.log(score);
@@ -154,7 +177,6 @@ function foundCheese2() {
   const cheese2Bottom = mouse.y <= cheese2.y + cheese2.height
 
   if (cheese2Left && cheese2Right && cheese2Top && cheese2Bottom) {
-        console.log("found the second random cheese");
         score += 1;
         scoreboard.innerText = score;
         console.log(score);
@@ -170,7 +192,6 @@ function foundCheese3() {
   const cheese3Bottom = mouse.y <= cheese3.y + cheese3.height
 
   if (cheese3Left && cheese3Right && cheese3Top && cheese3Bottom) {
-        console.log("found the third random cheese");
         score += 1;
         scoreboard.innerText = score;
         console.log(score);
@@ -189,11 +210,13 @@ function movementHandler(e) {
 
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
+    mouseHole.render()
     mouse.render()
     // random cheese render
     cheese1.render()
     cheese2.render()
     cheese3.render()
+    foundHome()
     detectWall()
     foundCheese1()
     foundCheese2()

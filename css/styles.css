@@ -31,11 +31,12 @@ canvas {
 
 p {
     font-size: 18px;
+    margin: 25px;
 }
 
 button {
-    height: 50px;
-    width: 200px;
+    height: 60px;
+    width: 220px;
     font-family: var(--primary-font);
     color: lightgray;
     font-size: 27px;
@@ -58,15 +59,9 @@ button:hover {
     font-size: 25px;
 }
 
-#scoreboard {
-}
-
-#countdown {
-}
-
 .home-container {
     /* display: none; */
-    position: absolute;
+    /* position: absolute; */
     top: 41%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -102,4 +97,10 @@ button:hover {
 .header {
     font-size: 50px;
     margin-bottom: 60px;
+}
+
+.score-container {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 30px;
 }

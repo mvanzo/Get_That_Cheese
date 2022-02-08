@@ -12,7 +12,7 @@
     <div class="home-container">
         <div class='header'>Get That Cheese</div>
         <div>
-            <p>It's night and the humans have gone to bed. You're a mouse and you're hungry for cheese crumbles, which the messy homeowners have all over their house. Go get it! Collect as much cheese as you can before your time runs out!</p>
+            <p>It's night and the humans have gone to bed. You're a mouse and you're hungry for cheese crumbles, which the messy homeowners have dropped all over their house. Go get it! Collect as much cheese as you can before your time runs out!</p>
             <button id='new-game-button'>Start Game</button>
         </div>
     </div>
@@ -30,8 +30,10 @@
         <main>
             <canvas id="canvas"></canvas>
         </main>
-        <div>Cheesy Score: <span id="scoreboard">0</div>
-        <div>Countdown timer: <span id="countdown"></span></div>
+        <div class="score-container">
+            <div>Cheese Gobbled: <span id="scoreboard">0</div>
+            <div>Time Left: <span id="countdown"></span></div>
+        </div>
     </div>
     
 <script src="main.js"></script>
