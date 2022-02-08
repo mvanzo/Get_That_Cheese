@@ -4,6 +4,7 @@ document.addEventListener("keydown", movementHandler)
 const scoreboard = document.querySelector("#scoreboard")
 const countdown = document.querySelector('#countdown')
 const newGameButton = document.querySelector('#new-game-button')
+const playAgainButton = document.querySelector('#play-again-button')
 
 // set up the renderer
 const ctx = canvas.getContext("2d")
@@ -14,11 +15,11 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
 
 // variable state
 let newGameClock = 5
-  // clock countdown is within startGame function
   countdown.innerText = newGameClock
 let score = 0;
 
 let gameLoopInterval = setInterval(gameLoop, 60)
+
 
 //start game function with new game button
 newGameButton.addEventListener('click', startGame)
@@ -41,8 +42,6 @@ function startGame() {
   }, 1000)
 }
 
-
-
 function timeIsUp() {
   // display postgame container
   document.querySelector('.postgame-container').style.display = 'block';
@@ -50,6 +49,31 @@ function timeIsUp() {
   document.querySelector('#final-tally').innerText = score
   // new game button to start another game -- restart game loop function??
 }
+
+
+
+playAgainButton.addEventListener('click', restartGame)
+
+function restartGame() {
+  // clear postgame-container from screen
+  document.querySelector('.postgame-container').style.display = 'none';
+  // reset clock to full time and update the DOM for reload page
+  newGameClock = 5;
+  countdown.innerText = 5;
+  // reset score to 0 and update the DOM for reload page
+  score = 0;
+  scoreboard.innerText = 0;
+  // move mouse back to start point
+  mouse.x = 10;
+  mouse.y = 10;
+  // re-render cheese
+  cheese1.inPlay = true;
+  cheese2.inPlay = true;
+  cheese3.inPlay = true;
+  // run startGame function
+  startGame();
+}
+
 
 
 
