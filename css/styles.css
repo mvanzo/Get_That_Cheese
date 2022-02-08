@@ -94,7 +94,7 @@ button:hover {
     text-align: center;
 }
 
-.losing-container {
+.time-out-container {
     display: none;
     position: absolute;
     top: 41%;

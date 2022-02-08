@@ -50,8 +50,8 @@ function startGame() {
 }
 
 function timeIsUp() {
-  // display losing container
-  document.querySelector('.losing-container').style.display = 'block';
+  // display time-out container
+  document.querySelector('.time-out-container').style.display = 'block';
   // new game button to start another game -- restart game loop function??
   document.querySelector('#play-again-button-2').addEventListener('click', restartGame)
 }
@@ -59,7 +59,7 @@ function timeIsUp() {
 function restartGame() {
   // clear winning-container from screen
   document.querySelector('.winning-container').style.display = 'none';
-  document.querySelector('.losing-container').style.display = 'none';
+  document.querySelector('.time-out-container').style.display = 'none';
   // reset clock to full time and update the DOM for reload page
   newGameClock = 8;
   countdown.innerText = 8;
