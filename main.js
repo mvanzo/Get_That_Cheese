@@ -23,9 +23,10 @@ canvas.setAttribute("height", getComputedStyle(canvas)["height"])
 canvas.setAttribute("width", getComputedStyle(canvas)["width"])
 
 // variable state
-let newGameClock = 5
+let newGameClock = 8
   countdown.innerText = newGameClock
 let score = 0;
+let safeAtHome = false;
 
 let gameLoopInterval = setInterval(gameLoop, 60)
 
@@ -41,6 +42,8 @@ function startGame() {
       //end game function when time = 0
       timeIsUp();
       // clear interval of game timer function--no longer counting
+      clearInterval(gameTimer);
+    } else if (safeAtHome) {
       clearInterval(gameTimer);
     } else {
     newGameClock -= 1;
@@ -63,8 +66,8 @@ function restartGame() {
   // clear postgame-container from screen
   document.querySelector('.postgame-container').style.display = 'none';
   // reset clock to full time and update the DOM for reload page
-  newGameClock = 5;
-  countdown.innerText = 5;
+  newGameClock = 8;
+  countdown.innerText = 8;
   // reset score to 0 and update the DOM for reload page
   score = 0;
   scoreboard.innerText = 0;
@@ -75,6 +78,8 @@ function restartGame() {
   cheese1.inPlay = true;
   cheese2.inPlay = true;
   cheese3.inPlay = true;
+  // safeAtHome set to false so game timer can run again
+  safeAtHome = false;
   // run startGame function
   startGame();
 }
@@ -151,7 +156,13 @@ function foundHome() {
   const homeBottom = mouse.y <= mouseHole.y + mouseHole.height-30;
 
   if (homeLeft && homeRight && homeTop && homeBottom) {
-    console.log('found home!')
+    // stops the clock with this variable
+    safeAtHome = true;
+    // display postgame container
+    document.querySelector('.postgame-container').style.display = 'block';
+    // show score from previous round
+    document.querySelector('#final-tally').innerText = score;
+    // new game button to start another game -- restart game loop function??
   }
 }
 
