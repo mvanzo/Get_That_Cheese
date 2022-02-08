@@ -50,8 +50,6 @@ function timeIsUp() {
   // new game button to start another game -- restart game loop function??
 }
 
-
-
 playAgainButton.addEventListener('click', restartGame)
 
 function restartGame() {
@@ -74,9 +72,6 @@ function restartGame() {
   startGame();
 }
 
-
-
-
 const mouse = {
     x: 10,
     y: 10,
@@ -97,7 +92,6 @@ class Cheese {
         this.width = width
         this.height = height
         this.color = color
-        this.inPlay = inPlay
     }
     render() {
         ctx.fillStyle = this.color
@@ -105,9 +99,10 @@ class Cheese {
     }
 }
 
-const cheese1 = new Cheese(250, 250, 30, 30, "red", true)
-const cheese2 = new Cheese(150, 50, 30, 30, "blue", true)
-const cheese3 = new Cheese(50, 150, 30, 30, "green", true)
+// cheese object initiation with random location
+const cheese1 = new Cheese(Math.floor(Math.random()* 300), Math.floor(Math.random()* 300), 20, 20, 'red')
+const cheese2 = new Cheese(Math.floor(Math.random()* 300), Math.floor(Math.random()* 300), 20, 20, 'blue')
+const cheese3 = new Cheese(Math.floor(Math.random()* 300), Math.floor(Math.random()* 300), 20, 20, 'green')
 
 // collision detection - borders
 function detectWall() {
@@ -134,55 +129,55 @@ function detectWall() {
     }
 }
 
+//
+//
+// attempting random cheese find
 function foundCheese1() {
-    const cheese1Left = mouse.x + mouse.width >= cheese1.x
-    const cheese1Right = mouse.x <= cheese1.x + cheese1.width
-    const cheese1Top = mouse.y + mouse.height >= cheese1.y
-    const cheese1Bottom = mouse.y <= cheese1.y + cheese1.height
+  const cheese1Left = mouse.x + mouse.width >= cheese1.x
+  const cheese1Right = mouse.x <= cheese1.x + cheese1.width
+  const cheese1Top = mouse.y + mouse.height >= cheese1.y
+  const cheese1Bottom = mouse.y <= cheese1.y + cheese1.height
 
-    if (cheese1Left && cheese1Right && cheese1Top && cheese1Bottom) {
-        if (cheese1.inPlay == true) {
-          console.log("found the first cheese");
-          score += 1;
-          scoreboard.innerText = score
-          console.log(score);
-          cheese1.inPlay = false;
-        }
+  if (cheese1Left && cheese1Right && cheese1Top && cheese1Bottom) {
+        console.log("found the first random cheese");
+        score += 1;
+        scoreboard.innerText = score;
+        console.log(score);
+        cheese1.x = Math.floor(Math.random()*200);
+        cheese1.y = Math.floor(Math.random()*200);
       }
 }
 
 function foundCheese2() {
-    const cheese2Left = mouse.x + mouse.width >= cheese2.x
-    const cheese2Right = mouse.x <= cheese2.x + cheese2.width
-    const cheese2Top = mouse.y + mouse.height >= cheese2.y
-    const cheese2Bottom = mouse.y <= cheese2.y + cheese2.height
+  const cheese2Left = mouse.x + mouse.width >= cheese2.x
+  const cheese2Right = mouse.x <= cheese2.x + cheese2.width
+  const cheese2Top = mouse.y + mouse.height >= cheese2.y
+  const cheese2Bottom = mouse.y <= cheese2.y + cheese2.height
 
-    if (cheese2Left && cheese2Right && cheese2Top && cheese2Bottom) {
-        if (cheese2.inPlay == true) {
-          console.log('found the second cheese');
-          score +=1;
-          scoreboard.innerText = score;
-          console.log(score);
-          cheese2.inPlay = false;
-        }
-    }
+  if (cheese2Left && cheese2Right && cheese2Top && cheese2Bottom) {
+        console.log("found the second random cheese");
+        score += 1;
+        scoreboard.innerText = score;
+        console.log(score);
+        cheese2.x = Math.floor(Math.random()*200);
+        cheese2.y = Math.floor(Math.random()*200);
+      }
 }
 
 function foundCheese3() {
-    const cheese3Left = mouse.x + mouse.width >= cheese3.x
-    const cheese3Right = mouse.x <= cheese3.x + cheese3.width
-    const cheese3Top = mouse.y + mouse.height >= cheese3.y
-    const cheese3Bottom = mouse.y <= cheese3.y + cheese3.height
+  const cheese3Left = mouse.x + mouse.width >= cheese3.x
+  const cheese3Right = mouse.x <= cheese3.x + cheese3.width
+  const cheese3Top = mouse.y + mouse.height >= cheese3.y
+  const cheese3Bottom = mouse.y <= cheese3.y + cheese3.height
 
-    if (cheese3Left && cheese3Right && cheese3Top && cheese3Bottom) {
-        if (cheese3.inPlay == true) {
-          console.log('found the third cheese');
-          score +=1;
-          scoreboard.innerText = score;
-          console.log(score);
-          cheese3.inPlay = false;
-        }
-    }
+  if (cheese3Left && cheese3Right && cheese3Top && cheese3Bottom) {
+        console.log("found the third random cheese");
+        score += 1;
+        scoreboard.innerText = score;
+        console.log(score);
+        cheese3.x = Math.floor(Math.random()*200);
+        cheese3.y = Math.floor(Math.random()*200);
+      }
 }
 
 function movementHandler(e) {
@@ -196,10 +191,17 @@ function movementHandler(e) {
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     mouse.render()
-    if (cheese1.inPlay) cheese1.render()
-    if (cheese2.inPlay) cheese2.render()
-    if (cheese3.inPlay) cheese3.render()
+    // if (cheese1.inPlay) cheese1.render()
+    // if (cheese2.inPlay) cheese2.render()
+    // if (cheese3.inPlay) cheese3.render()
+    // random cheese render
+    cheese1.render()
+    cheese2.render()
+    cheese3.render()
     detectWall()
+    // foundCheese1()
+    // foundCheese2()
+    // foundCheese3()
     foundCheese1()
     foundCheese2()
     foundCheese3()
