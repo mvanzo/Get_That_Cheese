@@ -3,8 +3,8 @@ const canvas = document.querySelector("#canvas")
 document.addEventListener("keydown", movementHandler)
 const scoreboard = document.querySelector("#scoreboard")
 const countdown = document.querySelector('#countdown')
-const newGameButton = document.querySelector('#new-game-button')
-const playAgainButton = document.querySelector('#play-again-button')
+document.querySelector('#new-game-button').addEventListener('click', startGame)
+
 // mouse image upload
 const mouseImg = new Image();
 mouseImg.src = '/img/mouse.png';
@@ -30,9 +30,6 @@ let safeAtHome = false;
 
 let gameLoopInterval = setInterval(gameLoop, 60)
 
-//start game function with new game button
-newGameButton.addEventListener('click', startGame)
-
 function startGame() {
   // hide display for home container
   document.querySelector('.home-container').style.display = 'none';
@@ -53,18 +50,16 @@ function startGame() {
 }
 
 function timeIsUp() {
-  // display postgame container
-  document.querySelector('.postgame-container').style.display = 'block';
-  // show score from previous round
-  document.querySelector('#final-tally').innerText = score
+  // display losing container
+  document.querySelector('.losing-container').style.display = 'block';
   // new game button to start another game -- restart game loop function??
+  document.querySelector('#play-again-button-2').addEventListener('click', restartGame)
 }
 
-playAgainButton.addEventListener('click', restartGame)
-
 function restartGame() {
-  // clear postgame-container from screen
-  document.querySelector('.postgame-container').style.display = 'none';
+  // clear winning-container from screen
+  document.querySelector('.winning-container').style.display = 'none';
+  document.querySelector('.losing-container').style.display = 'none';
   // reset clock to full time and update the DOM for reload page
   newGameClock = 8;
   countdown.innerText = 8;
@@ -158,11 +153,12 @@ function foundHome() {
   if (homeLeft && homeRight && homeTop && homeBottom) {
     // stops the clock with this variable
     safeAtHome = true;
-    // display postgame container
-    document.querySelector('.postgame-container').style.display = 'block';
+    // display winning container
+    document.querySelector('.winning-container').style.display = 'block';
     // show score from previous round
     document.querySelector('#final-tally').innerText = score;
     // new game button to start another game -- restart game loop function??
+    document.querySelector('#play-again-button').addEventListener('click', restartGame)
   }
 }
 
@@ -175,7 +171,6 @@ function foundCheese1() {
   if (cheese1Left && cheese1Right && cheese1Top && cheese1Bottom) {
         score += 1;
         scoreboard.innerText = score;
-        console.log(score);
         cheese1.x = Math.floor(Math.random()*490);
         cheese1.y = Math.floor(Math.random()*390);
       }
@@ -190,7 +185,6 @@ function foundCheese2() {
   if (cheese2Left && cheese2Right && cheese2Top && cheese2Bottom) {
         score += 1;
         scoreboard.innerText = score;
-        console.log(score);
         cheese2.x = Math.floor(Math.random()*490);
         cheese2.y = Math.floor(Math.random()*390);
       }
@@ -205,7 +199,6 @@ function foundCheese3() {
   if (cheese3Left && cheese3Right && cheese3Top && cheese3Bottom) {
         score += 1;
         scoreboard.innerText = score;
-        console.log(score);
         cheese3.x = Math.floor(Math.random()*490);
         cheese3.y = Math.floor(Math.random()*390);
       }

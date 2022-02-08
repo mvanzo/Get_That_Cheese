@@ -81,7 +81,20 @@ button:hover {
     align-items: center; */
 }
 
-.postgame-container {
+.winning-container {
+    display: none;
+    position: absolute;
+    top: 41%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 520px;
+    background-color: var(--secondary-color);
+    font-family: var(--secondary-font);
+    text-align: center;
+}
+
+.losing-container {
     display: none;
     position: absolute;
     top: 41%;
