@@ -5,22 +5,12 @@ const scoreboard = document.querySelector("#scoreboard")
 const countdown = document.querySelector('#countdown')
 const newGameButton = document.querySelector('#new-game-button')
 const playAgainButton = document.querySelector('#play-again-button')
-
-//
-//
 // mouse image upload
 const mouseImg = new Image();
-mouseImg.src = '/img/mouse2.png';
-
+mouseImg.src = '/img/mouse.png';
+// cheese image upload
 const cheeseImg = new Image();
-cheeseImg.src = '/img/cheese2.png';
-
-// img.onload = () => {
-//   ctx.drawImage(img, 0, 0, 800, 566, 800, 566, 40, 40)
-// };
-//
-//
-//
+cheeseImg.src = '/img/cheese.png';
 
 // set up the renderer
 const ctx = canvas.getContext("2d")
@@ -90,8 +80,8 @@ function restartGame() {
 const mouse = {
     x: 10,
     y: 10,
-    width: 57,
-    height: 40,
+    width: 87,
+    height: 62,
     render: () => {
         ctx.drawImage(mouseImg, 0, 0, 800, 566, mouse.x, mouse.y, mouse.width, mouse.height);
     },
@@ -112,9 +102,9 @@ class Cheese {
 }
 
 // cheese object initiation with random location
-const cheese1 = new Cheese(Math.floor(Math.random()* 300), Math.floor(Math.random()* 300), 33, 30)
-const cheese2 = new Cheese(Math.floor(Math.random()* 300), Math.floor(Math.random()* 300), 43, 40)
-const cheese3 = new Cheese(Math.floor(Math.random()* 300), Math.floor(Math.random()* 300), 28, 26)
+const cheese1 = new Cheese(Math.floor(Math.random()* 490), Math.floor(Math.random()* 390), 33, 30)
+const cheese2 = new Cheese(Math.floor(Math.random()* 490), Math.floor(Math.random()* 390), 43, 40)
+const cheese3 = new Cheese(Math.floor(Math.random()* 490), Math.floor(Math.random()* 390), 28, 26)
 
 // collision detection - borders
 function detectWall() {
@@ -152,8 +142,8 @@ function foundCheese1() {
         score += 1;
         scoreboard.innerText = score;
         console.log(score);
-        cheese1.x = Math.floor(Math.random()*200);
-        cheese1.y = Math.floor(Math.random()*200);
+        cheese1.x = Math.floor(Math.random()*490);
+        cheese1.y = Math.floor(Math.random()*390);
       }
 }
 
@@ -168,8 +158,8 @@ function foundCheese2() {
         score += 1;
         scoreboard.innerText = score;
         console.log(score);
-        cheese2.x = Math.floor(Math.random()*200);
-        cheese2.y = Math.floor(Math.random()*200);
+        cheese2.x = Math.floor(Math.random()*490);
+        cheese2.y = Math.floor(Math.random()*390);
       }
 }
 
@@ -184,8 +174,8 @@ function foundCheese3() {
         score += 1;
         scoreboard.innerText = score;
         console.log(score);
-        cheese3.x = Math.floor(Math.random()*200);
-        cheese3.y = Math.floor(Math.random()*200);
+        cheese3.x = Math.floor(Math.random()*490);
+        cheese3.y = Math.floor(Math.random()*390);
       }
 }
 

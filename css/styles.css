@@ -1,40 +1,85 @@
 /* all linked up */
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Roboto&display=swap');
+
+:root {
+    --primary-color: #595c80;
+    --secondary-color: #fcc351;
+    
+    --primary-font: 'Audiowide', cursive;
+    --secondary-font: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: var(--primary-color);
+}
+
 h1 {
     text-align: center;
+    font-family: var(--primary-font);
+    color: var(--secondary-color);
+    font-size: 50px;
 }
 
 canvas {
+    background-image: url('https://www.wurmpedia.com/images/d/d9/Floor_board.png');
+    /* backup background color if image doesn't load */
     background-color: tan;
-    height: 400px;
-    width: 400px;
-    border: 5px solid blue;
+    height: 500px;
+    width: 625px;
+    border: 5px solid var(--secondary-color);
+}
+
+p {
+    font-size: 18px;
+}
+
+button {
+    height: 50px;
+    width: 200px;
+    font-family: var(--primary-font);
+    color: lightgray;
+    font-size: 27px;
+    background-color: var(--primary-color);
+    border-radius: 8px;
+}
+
+button:hover {
+    background-color: #36374d;
 }
 
 #container {
-    background-color: red;
+    /* background-color: red; */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    color: lightgray;
+    font-family: var(--secondary-font);
+    font-size: 25px;
 }
 
 #scoreboard {
-    background-color: yellow;
 }
 
 #countdown {
-    background-color: white;
 }
 
 .home-container {
+    /* display: none; */
     position: absolute;
-    top: 50%;
+    top: 41%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80%;
-    height: 80%;
+    width: 700px;
+    height: 520px;
     background-color: grey;
+    background-color: var(--secondary-color);
+    font-family: var(--secondary-font);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: center;
+    gap: 50px;
     /* position: flex;
     flex-direction: column;
     justify-content: center;
@@ -44,11 +89,17 @@ canvas {
 .postgame-container {
     display: none;
     position: absolute;
-    top: 50%;
+    top: 41%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80%;
-    height: 80%;
-    background-color: yellow;
+    width: 700px;
+    height: 520px;
+    background-color: var(--secondary-color);
+    font-family: var(--secondary-font);
     text-align: center;
+}
+
+.header {
+    font-size: 50px;
+    margin-bottom: 60px;
 }
