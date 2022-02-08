@@ -6,10 +6,12 @@ It's night and the humans have gone to bed. You're a mouse and you're hungry for
 ![](https://i.imgur.com/NMFtuvi.png)
 
 # MVP
+* Fixed map
+* Cheese crumbs placed in map
+* Scoreboard to keep track of number of cheese crumbs picked up
 * Functional start/end menu with a button to start new game
 * Moveable player used to collect squares
     * Keep track of number collected
-* Game map to travel through
 * Timer that counts down, ends gameplay
 * Mouse hole at end of map
 
@@ -18,6 +20,7 @@ It's night and the humans have gone to bed. You're a mouse and you're hungry for
 * Game map with different obstacles that will block movement
 * Mouse hole at end of map gives extra points for time left on the clock
 * Soundbite of "Get That Cheese" by Too $hort that plays whenever you get that cheese! -- or at the end game screen -- copyright issue?
+* Game map to travel through
 * Enemy cats that move along y-axis or x-axis and if touched, ends gameplay
     * AI cats to actively hunt down the mouse
 
@@ -31,4 +34,3 @@ It's night and the humans have gone to bed. You're a mouse and you're hungry for
 * CSS
 * Javascript
 * Canvas
-* Possibly Bootstrap for styling

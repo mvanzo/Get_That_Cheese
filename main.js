@@ -6,6 +6,22 @@ const countdown = document.querySelector('#countdown')
 const newGameButton = document.querySelector('#new-game-button')
 const playAgainButton = document.querySelector('#play-again-button')
 
+//
+//
+// mouse image upload
+const mouseImg = new Image();
+mouseImg.src = '/img/mouse2.png';
+
+const cheeseImg = new Image();
+cheeseImg.src = '/img/cheese2.png';
+
+// img.onload = () => {
+//   ctx.drawImage(img, 0, 0, 800, 566, 800, 566, 40, 40)
+// };
+//
+//
+//
+
 // set up the renderer
 const ctx = canvas.getContext("2d")
 // set canvas size to be the same as window
@@ -20,7 +36,6 @@ let score = 0;
 
 let gameLoopInterval = setInterval(gameLoop, 60)
 
-
 //start game function with new game button
 newGameButton.addEventListener('click', startGame)
 
@@ -29,7 +44,7 @@ function startGame() {
   document.querySelector('.home-container').style.display = 'none';
   //countdown starts
   let gameTimer = setInterval(function() {
-    if (newGameClock == 0) {
+    if (newGameClock == 1) {
       console.log('end game');
       //end game function when time = 0
       timeIsUp();
@@ -75,13 +90,10 @@ function restartGame() {
 const mouse = {
     x: 10,
     y: 10,
-    width: 20,
-    height: 20,
-    color: "hotpink",
-    alive: true,
+    width: 57,
+    height: 40,
     render: () => {
-        ctx.fillStyle = mouse.color
-        ctx.fillRect(mouse.x, mouse.y, mouse.width, mouse.height)
+        ctx.drawImage(mouseImg, 0, 0, 800, 566, mouse.x, mouse.y, mouse.width, mouse.height);
     },
 }
 
@@ -91,18 +103,18 @@ class Cheese {
         this.y = y
         this.width = width
         this.height = height
-        this.color = color
     }
     render() {
-        ctx.fillStyle = this.color
-        ctx.fillRect(this.x, this.y, this.width, this.height)
+        // ctx.fillStyle = this.color
+        // ctx.fillRect(this.x, this.y, this.width, this.height)
+        ctx.drawImage(cheeseImg, 0, 0, 524, 480, this.x, this.y, this.width, this.height);
     }
 }
 
 // cheese object initiation with random location
-const cheese1 = new Cheese(Math.floor(Math.random()* 300), Math.floor(Math.random()* 300), 20, 20, 'red')
-const cheese2 = new Cheese(Math.floor(Math.random()* 300), Math.floor(Math.random()* 300), 20, 20, 'blue')
-const cheese3 = new Cheese(Math.floor(Math.random()* 300), Math.floor(Math.random()* 300), 20, 20, 'green')
+const cheese1 = new Cheese(Math.floor(Math.random()* 300), Math.floor(Math.random()* 300), 33, 30)
+const cheese2 = new Cheese(Math.floor(Math.random()* 300), Math.floor(Math.random()* 300), 43, 40)
+const cheese3 = new Cheese(Math.floor(Math.random()* 300), Math.floor(Math.random()* 300), 28, 26)
 
 // collision detection - borders
 function detectWall() {
@@ -129,9 +141,6 @@ function detectWall() {
     }
 }
 
-//
-//
-// attempting random cheese find
 function foundCheese1() {
   const cheese1Left = mouse.x + mouse.width >= cheese1.x
   const cheese1Right = mouse.x <= cheese1.x + cheese1.width
@@ -191,22 +200,12 @@ function movementHandler(e) {
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     mouse.render()
-    // if (cheese1.inPlay) cheese1.render()
-    // if (cheese2.inPlay) cheese2.render()
-    // if (cheese3.inPlay) cheese3.render()
     // random cheese render
     cheese1.render()
     cheese2.render()
     cheese3.render()
     detectWall()
-    // foundCheese1()
-    // foundCheese2()
-    // foundCheese3()
     foundCheese1()
     foundCheese2()
     foundCheese3()
 }
-
-
-
-//clear home screen with start game button
