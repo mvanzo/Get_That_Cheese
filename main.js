@@ -29,7 +29,7 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
 let newGameClock = 8
   countdown.innerText = newGameClock
 let score = 0;
-let safeAtHome = false;
+let stopTime = false;
 
 let gameLoopInterval = setInterval(gameLoop, 60)
 
@@ -43,7 +43,7 @@ function startGame() {
       timeIsUp();
       // clear interval of game timer function--no longer counting
       clearInterval(gameTimer);
-    } else if (safeAtHome) {
+    } else if (stopTime) {
       clearInterval(gameTimer);
     } else {
     newGameClock -= 1;
@@ -63,6 +63,7 @@ function restartGame() {
   // clear winning-container from screen
   document.querySelector('.winning-container').style.display = 'none';
   document.querySelector('.time-out-container').style.display = 'none';
+  document.querySelector('.losing-container').style.display = 'none';
   // reset clock to full time and update the DOM for reload page
   newGameClock = 8;
   countdown.innerText = 8;
@@ -76,8 +77,8 @@ function restartGame() {
   cheese1.inPlay = true;
   cheese2.inPlay = true;
   cheese3.inPlay = true;
-  // safeAtHome set to false so game timer can run again
-  safeAtHome = false;
+  // stopTime set to false so game timer can run again
+  stopTime = false;
   // run startGame function
   startGame();
 }
@@ -115,9 +116,8 @@ class trap {
 }
 
 // mouse trap object initiation OOP
-const trap1 = new trap(Math.floor(Math.random()* 490), Math.floor(Math.random()* 390), 80, 40)
-const trap2 = new trap(Math.floor(Math.random()* 490), Math.floor(Math.random()* 390), 80, 40)
-const trap3 = new trap(Math.floor(Math.random()* 490), Math.floor(Math.random()* 390), 80, 40)
+const trap1 = new trap(Math.floor(Math.random()* (600-100) + 100), Math.floor(Math.random()* (450-100) + 100), 80, 40)
+const trap2 = new trap(Math.floor(Math.random()* (600-100) + 100), Math.floor(Math.random()* (450-100) + 100), 80, 40)
 
 class Cheese {
     constructor(x, y, width, height) {
@@ -134,9 +134,9 @@ class Cheese {
 }
 
 // cheese object initiation with random location
-const cheese1 = new Cheese(Math.floor(Math.random()* 490), Math.floor(Math.random()* 390), 33, 30)
-const cheese2 = new Cheese(Math.floor(Math.random()* 490), Math.floor(Math.random()* 390), 43, 40)
-const cheese3 = new Cheese(Math.floor(Math.random()* 490), Math.floor(Math.random()* 390), 28, 26)
+const cheese1 = new Cheese(Math.floor(Math.random()* (600 - 100) + 100), Math.floor(Math.random()* (450-100) + 100), 33, 30);
+const cheese2 = new Cheese(Math.floor(Math.random()* (600 - 100) + 100), Math.floor(Math.random()* (450-100) + 100), 43, 40);
+const cheese3 = new Cheese(Math.floor(Math.random()* (600 - 100) + 100), Math.floor(Math.random()* (450-100) + 100), 28, 26);
 
 // collision detection - borders
 function detectWall() {
@@ -172,12 +172,12 @@ function foundHome() {
 
   if (homeLeft && homeRight && homeTop && homeBottom) {
     // stops the clock with this variable
-    safeAtHome = true;
+    stopTime = true;
     // display winning container
     document.querySelector('.winning-container').style.display = 'block';
     // show score from previous round
     document.querySelector('#final-tally').innerText = score;
-    // new game button to start another game -- restart game loop function??
+    // new game button to start another game
     document.querySelector('#play-again-button').addEventListener('click', restartGame)
   }
 }
@@ -224,6 +224,41 @@ function foundCheese3() {
       }
 }
 
+function caughtTrap1() {
+  const trap1Left = mouse.x + mouse.width >= trap1.x + 15;
+  const trap1Right = mouse.x <= trap1.x + trap1.width - 15;
+  const trap1Top = mouse.y + mouse.height >= trap1.y + 20;
+  const trap1Bottom = mouse.y <= trap1.y + trap1.height - 30;
+
+  if (trap1Left && trap1Right && trap1Top && trap1Bottom) {
+    console.log('stuck in the first trap');
+    // display lost game div
+    document.querySelector('.losing-container').style.display = 'block';
+    // stop timer
+    stopTime = true;
+    // new game button functionality
+    document.querySelector('#play-again-button-3').addEventListener('click', restartGame)
+  }
+}
+
+function caughtTrap2() {
+  const trap2Left = mouse.x + mouse.width >= trap2.x + 15;
+  const trap2Right = mouse.x <= trap2.x + trap2.width - 15;
+  const trap2Top = mouse.y + mouse.height >= trap2.y + 20;
+  const trap2Bottom = mouse.y <= trap2.y + trap2.height - 30;
+
+  if (trap2Left && trap2Right && trap2Top && trap2Bottom) {
+    console.log('stuck in the second trap');
+    // display lost game giv
+    // display lost game div
+    document.querySelector('.losing-container').style.display = 'block';
+    // stop timer
+    stopTime = true;
+    // new game button functionality
+    document.querySelector('#play-again-button-3').addEventListener('click', restartGame)
+  }
+}
+
 function movementHandler(e) {
     const speed = 20
     if (e.key === "ArrowLeft") mouse.x -= speed
@@ -242,9 +277,10 @@ function gameLoop() {
     cheese3.render()
     trap1.render()
     trap2.render()
-    trap3.render()
     foundHome()
     detectWall()
+    caughtTrap1()
+    caughtTrap2()
     foundCheese1()
     foundCheese2()
     foundCheese3()
