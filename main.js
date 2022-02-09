@@ -14,6 +14,9 @@ cheeseImg.src = '/img/cheese.png';
 // mouse hole image upload
 const mouseHoleImg = new Image();
 mouseHoleImg.src = '/img/mouse-hole.png';
+// mouse trap image upload
+const trapImg = new Image();
+trapImg.src = '/img/trap.png';
 
 // set up the renderer
 const ctx = canvas.getContext("2d")
@@ -99,8 +102,25 @@ const mouse = {
     }
 }
 
+class trap {
+  constructor(x, y, width, height) {
+    this.x = x
+    this.y = y
+    this.width = width
+    this.height = height
+  }
+  render() {
+    ctx.drawImage(trapImg, 0, 0, 800, 387, this.x, this.y, this.width, this.height);
+  }
+}
+
+// mouse trap object initiation OOP
+const trap1 = new trap(Math.floor(Math.random()* 490), Math.floor(Math.random()* 390), 80, 40)
+const trap2 = new trap(Math.floor(Math.random()* 490), Math.floor(Math.random()* 390), 80, 40)
+const trap3 = new trap(Math.floor(Math.random()* 490), Math.floor(Math.random()* 390), 80, 40)
+
 class Cheese {
-    constructor(x, y, width, height, color, inPlay) {
+    constructor(x, y, width, height) {
         this.x = x
         this.y = y
         this.width = width
@@ -220,6 +240,9 @@ function gameLoop() {
     cheese1.render()
     cheese2.render()
     cheese3.render()
+    trap1.render()
+    trap2.render()
+    trap3.render()
     foundHome()
     detectWall()
     foundCheese1()
