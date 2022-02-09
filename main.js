@@ -17,8 +17,8 @@ const cheeseImg = new Image();
   cheeseImg.src = '/img/cheese.png';
 const mouseHoleImg = new Image();
   mouseHoleImg.src = '/img/mouse-hole.png';
-const trapImg = new Image();
-  trapImg.src = '/img/trap.png';
+const catImg = new Image();
+  catImg.src = '/img/mean-cat.png';
 
 // set up the renderer
 const ctx = canvas.getContext("2d")
@@ -33,7 +33,7 @@ let newGameClock = 25
 let score = 0;
 let stopTime = false;
 
-let gameLoopInterval = setInterval(gameLoop, 60)
+let gameLoopInterval = setInterval(gameLoop, 30)
 
 function startGame() {
   // hide display for home container
@@ -115,21 +115,51 @@ const mouse = {
     }
 }
 
-class trap {
-  constructor(x, y, width, height) {
-    this.x = x
-    this.y = y
-    this.width = width
-    this.height = height
+class Cat {
+  constructor(x, y, width, height, speed) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.speed = speed;
+
+    this.dx = 1 * this.speed;
+    this.dy = 1 * this.speed;
   }
   render() {
-    ctx.drawImage(trapImg, 0, 0, 800, 387, this.x, this.y, this.width, this.height);
+    ctx.drawImage(catImg, 0, 0, 887, 572, this.x, this.y, this.width, this.height);
+  }
+  // moving traps
+  move() {
+    this.render();
+    this.x += this.dx;
+    this.y += this.dy;
+    // collision detection for walls
+    if (this.x <=0) this.dx = -this.dx;
+    if (this.x + this.width >= canvas.width) this.dx = -this.dx;
+    if (this.y <=0) this.dy = -this.dy;
+    if (this.y + this.height >= canvas.height) this.dy = -this.dy;
+  }
+
+  caught() {
+    const catLeft = mouse.x + mouse.width >= this.x + 20;
+    const catRight = mouse.x <= this.x + this.width - 25;
+    const catTop = mouse.y + mouse.height >= this.y + 20;
+    const catBottom = mouse.y <= this.y + this.height - 20;
+  
+    if (catLeft && catRight && catTop && catBottom) {
+      // display lost game div
+      document.querySelector('.losing-container').style.display = 'block';
+      // stop timer
+      stopTime = true;
+      // new game button functionality
+      document.querySelector('#play-again-button-3').addEventListener('click', restartGame)
+    }
   }
 }
 
-// mouse trap object initiation OOP
-const trap1 = new trap(Math.floor(Math.random()* (600-100) + 100), Math.floor(Math.random()* (450-100) + 100), 80, 40)
-const trap2 = new trap(Math.floor(Math.random()* (600-100) + 100), Math.floor(Math.random()* (450-100) + 100), 80, 40)
+const cat1 = new Cat(Math.floor(Math.random()* (525-150) + 150), Math.floor(Math.random()* (400-150) + 150), 100, 64, 1)
+const cat2 = new Cat(Math.floor(Math.random()* (525-150) + 150), Math.floor(Math.random()* (400-150) + 150), 100, 64, -1)
 
 class Cheese {
     constructor(x, y, width, height, inPlay) {
@@ -144,6 +174,26 @@ class Cheese {
         // ctx.fillRect(this.x, this.y, this.width, this.height)
         ctx.drawImage(cheeseImg, 0, 0, 524, 480, this.x, this.y, this.width, this.height, this.inPlay);
     }
+    //
+    //
+    //
+    foundCheese() {
+      const cheeseLeft = mouse.x + mouse.width >= this.x
+      const cheeseRight = mouse.x <= this.x + this.width
+      const cheeseTop = mouse.y + mouse.height >= this.y
+      const cheeseBottom = mouse.y <= this.y + this.height
+    
+      if (cheeseLeft && cheeseRight && cheeseTop && cheeseBottom) {
+            score += 1;
+            scoreboard.innerText = score;
+            this.inPlay = false;
+            // delayed re-rendering of cheese - made as arrow function to keep clean (one line)
+            setTimeout(() => this.inPlay = true, 1000);
+            this.x = Math.floor(Math.random()*490);
+            this.y = Math.floor(Math.random()*390);
+          }
+    }
+
 }
 
 // cheese object initiation with random location
@@ -183,89 +233,6 @@ function foundHome() {
   }
 }
 
-function foundCheese1() {
-  const cheese1Left = mouse.x + mouse.width >= cheese1.x
-  const cheese1Right = mouse.x <= cheese1.x + cheese1.width
-  const cheese1Top = mouse.y + mouse.height >= cheese1.y
-  const cheese1Bottom = mouse.y <= cheese1.y + cheese1.height
-
-  if (cheese1Left && cheese1Right && cheese1Top && cheese1Bottom) {
-        score += 1;
-        scoreboard.innerText = score;
-        cheese1.inPlay = false;
-        // delayed re-rendering of cheese - made as arrow function to keep clean (one line)
-        setTimeout(() => cheese1.inPlay = true, 1000);
-        cheese1.x = Math.floor(Math.random()*490);
-        cheese1.y = Math.floor(Math.random()*390);
-      }
-}
-
-function foundCheese2() {
-  const cheese2Left = mouse.x + mouse.width >= cheese2.x
-  const cheese2Right = mouse.x <= cheese2.x + cheese2.width
-  const cheese2Top = mouse.y + mouse.height >= cheese2.y
-  const cheese2Bottom = mouse.y <= cheese2.y + cheese2.height
-
-  if (cheese2Left && cheese2Right && cheese2Top && cheese2Bottom) {
-        score += 1;
-        scoreboard.innerText = score;
-        cheese2.inPlay = false;
-        // delayed re-rendering of cheese
-        setTimeout(() => cheese2.inPlay = true, 1000);
-        cheese2.x = Math.floor(Math.random()*490);
-        cheese2.y = Math.floor(Math.random()*390);
-      }
-}
-
-function foundCheese3() {
-  const cheese3Left = mouse.x + mouse.width >= cheese3.x
-  const cheese3Right = mouse.x <= cheese3.x + cheese3.width
-  const cheese3Top = mouse.y + mouse.height >= cheese3.y
-  const cheese3Bottom = mouse.y <= cheese3.y + cheese3.height
-
-  if (cheese3Left && cheese3Right && cheese3Top && cheese3Bottom) {
-        score += 1;
-        scoreboard.innerText = score;
-        cheese3.inPlay = false;
-        // delayed re-rendering of cheese
-        setTimeout(() => cheese3.inPlay = true, 1000);
-        cheese3.x = Math.floor(Math.random()*490);
-        cheese3.y = Math.floor(Math.random()*390);
-      }
-}
-
-function caughtTrap1() {
-  const trap1Left = mouse.x + mouse.width >= trap1.x + 15;
-  const trap1Right = mouse.x <= trap1.x + trap1.width - 15;
-  const trap1Top = mouse.y + mouse.height >= trap1.y + 20;
-  const trap1Bottom = mouse.y <= trap1.y + trap1.height - 30;
-
-  if (trap1Left && trap1Right && trap1Top && trap1Bottom) {
-    // display lost game div
-    document.querySelector('.losing-container').style.display = 'block';
-    // stop timer
-    stopTime = true;
-    // new game button functionality
-    document.querySelector('#play-again-button-3').addEventListener('click', restartGame)
-  }
-}
-
-function caughtTrap2() {
-  const trap2Left = mouse.x + mouse.width >= trap2.x + 15;
-  const trap2Right = mouse.x <= trap2.x + trap2.width - 15;
-  const trap2Top = mouse.y + mouse.height >= trap2.y + 20;
-  const trap2Bottom = mouse.y <= trap2.y + trap2.height - 30;
-
-  if (trap2Left && trap2Right && trap2Top && trap2Bottom) {
-    // display lost game div
-    document.querySelector('.losing-container').style.display = 'block';
-    // stop timer
-    stopTime = true;
-    // new game button functionality
-    document.querySelector('#play-again-button-3').addEventListener('click', restartGame)
-  }
-}
-
 function movementHandler(e) {
     const speed = 20
     if (e.key === "ArrowLeft") mouse.x -= speed
@@ -292,20 +259,22 @@ function movementHandler(e) {
 // }
 
 function gameLoop() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     mouseHole.render()
     mouse.render()
     // random cheese render
     if (cheese1.inPlay) cheese1.render()
     if (cheese2.inPlay) cheese2.render()
     if (cheese3.inPlay) cheese3.render()
-    trap1.render()
-    trap2.render()
+    cat1.render()
+    cat2.render()
+    cat1.move()
+    cat2.move()
+    cat1.caught()
+    cat2.caught()
     foundHome()
     detectWall()
-    caughtTrap1()
-    caughtTrap2()
-    foundCheese1()
-    foundCheese2()
-    foundCheese3()
+    cheese1.foundCheese()
+    cheese2.foundCheese()
+    cheese3.foundCheese()
 }
