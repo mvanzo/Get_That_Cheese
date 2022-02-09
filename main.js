@@ -36,6 +36,8 @@ let stopTime = false;
 let gameLoopInterval = setInterval(gameLoop, 30)
 
 function startGame() {
+  // mouse inPlay-->cats start moving
+  mouse.inPlay = true;
   // hide display for home container
   document.querySelector('.home-container').style.display = 'none';
   //countdown starts
@@ -54,8 +56,8 @@ function startGame() {
   }, 1000)
 }
 
-
 function timeIsUp() {
+  mouse.inPlay = false;
   // display time-out container
   document.querySelector('.time-out-container').style.display = 'block';
   // new game button to start another game -- restart game loop function??
@@ -74,9 +76,10 @@ function restartGame() {
   score = 0;
   scoreboard.innerText = 0;
   // move mouse back to start point
+  mouse.inPlay = true;
   mouse.x = 10;
   mouse.y = 10;
-  // re-render cheese, and traps
+  // re-render cheese, and cats
   cheese1.x = Math.floor(Math.random()* (600-100) + 100);
   cheese1.y = Math.floor(Math.random()* (450-100) + 100);
   cheese2.x = Math.floor(Math.random()* (600-100) + 100);
@@ -84,10 +87,10 @@ function restartGame() {
   cheese3.x = Math.floor(Math.random()* (600-100) + 100);
   cheese3.y = Math.floor(Math.random()* (450-100) + 100);
 
-  trap1.x = Math.floor(Math.random()* (600-100) + 100);
-  trap1.y = Math.floor(Math.random()* (450-100) + 100);
-  trap2.x = Math.floor(Math.random()* (600-100) + 100);
-  trap2.y = Math.floor(Math.random()* (450-100) + 100);
+  cat1.x = Math.floor(Math.random()* (600-100) + 100);
+  cat1.y = Math.floor(Math.random()* (450-100) + 100);
+  cat2.x = Math.floor(Math.random()* (600-100) + 100);
+  cat2.y = Math.floor(Math.random()* (450-100) + 100);
 
   // stopTime set to false so game timer can run again
   stopTime = false;
@@ -110,6 +113,7 @@ const mouse = {
     y: 10,
     width: 87,
     height: 62,
+    inPlay: false,
     render: () => {
         ctx.drawImage(mouseImg, 0, 0, 800, 566, mouse.x, mouse.y, mouse.width, mouse.height);
     }
@@ -129,7 +133,7 @@ class Cat {
   render() {
     ctx.drawImage(catImg, 0, 0, 887, 572, this.x, this.y, this.width, this.height);
   }
-  // moving traps
+  // moving cats
   move() {
     this.render();
     this.x += this.dx;
@@ -140,7 +144,7 @@ class Cat {
     if (this.y <=0) this.dy = -this.dy;
     if (this.y + this.height >= canvas.height) this.dy = -this.dy;
   }
-
+  // collision detection
   caught() {
     const catLeft = mouse.x + mouse.width >= this.x + 20;
     const catRight = mouse.x <= this.x + this.width - 25;
@@ -154,6 +158,8 @@ class Cat {
       stopTime = true;
       // new game button functionality
       document.querySelector('#play-again-button-3').addEventListener('click', restartGame)
+      // mouse not in play --> cats stop moving
+      mouse.inPlay = false;
     }
   }
 }
@@ -224,6 +230,7 @@ function foundHome() {
   if (homeLeft && homeRight && homeTop && homeBottom) {
     // stops the clock with this variable
     stopTime = true;
+    mouse.inPlay = false;
     // display winning container
     document.querySelector('.winning-container').style.display = 'block';
     // show score from previous round
@@ -268,8 +275,8 @@ function gameLoop() {
     if (cheese3.inPlay) cheese3.render()
     cat1.render()
     cat2.render()
-    cat1.move()
-    cat2.move()
+    if (mouse.inPlay) cat1.move()
+    if (mouse.inPlay) cat2.move()
     cat1.caught()
     cat2.caught()
     foundHome()
