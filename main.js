@@ -73,10 +73,19 @@ function restartGame() {
   // move mouse back to start point
   mouse.x = 10;
   mouse.y = 10;
-  // re-render cheese
-  cheese1.inPlay = true;
-  cheese2.inPlay = true;
-  cheese3.inPlay = true;
+  // re-render cheese, and traps
+  cheese1.x = Math.floor(Math.random()* (600-100) + 100);
+  cheese1.y = Math.floor(Math.random()* (450-100) + 100);
+  cheese2.x = Math.floor(Math.random()* (600-100) + 100);
+  cheese2.y = Math.floor(Math.random()* (450-100) + 100);
+  cheese3.x = Math.floor(Math.random()* (600-100) + 100);
+  cheese3.y = Math.floor(Math.random()* (450-100) + 100);
+
+  trap1.x = Math.floor(Math.random()* (600-100) + 100);
+  trap1.y = Math.floor(Math.random()* (450-100) + 100);
+  trap2.x = Math.floor(Math.random()* (600-100) + 100);
+  trap2.y = Math.floor(Math.random()* (450-100) + 100);
+
   // stopTime set to false so game timer can run again
   stopTime = false;
   // run startGame function
