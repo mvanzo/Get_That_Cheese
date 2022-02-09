@@ -21,6 +21,7 @@ It's night and the humans have gone to bed. You're a mouse and you're hungry for
 * Mouse hole at end of map gives extra points for time left on the clock
 * Soundbite of "Get That Cheese" by Too $hort that plays whenever you get that cheese! -- or at the end game screen -- copyright issue?
 * Game map to travel through
+* Mouse traps that will end game play
 * Enemy cats that move along y-axis or x-axis and if touched, ends gameplay
     * AI cats to actively hunt down the mouse
 

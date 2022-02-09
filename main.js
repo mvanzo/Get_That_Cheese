@@ -1,22 +1,24 @@
 // DOM SELECTORS - EVENT LISTENERS
-const canvas = document.querySelector("#canvas")
-document.addEventListener("keydown", movementHandler)
-const scoreboard = document.querySelector("#scoreboard")
-const countdown = document.querySelector('#countdown')
-document.querySelector('#new-game-button').addEventListener('click', startGame)
+const canvas = document.querySelector("#canvas");
+document.addEventListener("keydown", movementHandler);
+const scoreboard = document.querySelector("#scoreboard");
+const countdown = document.querySelector('#countdown');
+document.querySelector('#new-game-button').addEventListener('click', startGame);
 
-// mouse image upload
+// DIAGONAL MOVEMENT ACTING GLITCHY
+// const pressedKeys = { }
+// document.addEventListener('keydown', e => pressedKeys[e.key] = true)
+// document.addEventListener('keyup', e => pressedKeys[e.key] = false)
+
+// images to upload to the canvas
 const mouseImg = new Image();
-mouseImg.src = '/img/mouse.png';
-// cheese image upload
+  mouseImg.src = '/img/mouse.png';
 const cheeseImg = new Image();
-cheeseImg.src = '/img/cheese.png';
-// mouse hole image upload
+  cheeseImg.src = '/img/cheese.png';
 const mouseHoleImg = new Image();
-mouseHoleImg.src = '/img/mouse-hole.png';
-// mouse trap image upload
+  mouseHoleImg.src = '/img/mouse-hole.png';
 const trapImg = new Image();
-trapImg.src = '/img/trap.png';
+  trapImg.src = '/img/trap.png';
 
 // set up the renderer
 const ctx = canvas.getContext("2d")
@@ -26,7 +28,7 @@ canvas.setAttribute("height", getComputedStyle(canvas)["height"])
 canvas.setAttribute("width", getComputedStyle(canvas)["width"])
 
 // variable state
-let newGameClock = 8
+let newGameClock = 25
   countdown.innerText = newGameClock
 let score = 0;
 let stopTime = false;
@@ -38,12 +40,12 @@ function startGame() {
   document.querySelector('.home-container').style.display = 'none';
   //countdown starts
   let gameTimer = setInterval(function() {
-    if (newGameClock == 1) {
-      //end game function when time = 0
-      timeIsUp();
-      // clear interval of game timer function--no longer counting
+    if (stopTime) {
       clearInterval(gameTimer);
-    } else if (stopTime) {
+    } else if (newGameClock == 0) {
+      //end game function when time is out
+      timeIsUp();
+      // stoping counting
       clearInterval(gameTimer);
     } else {
     newGameClock -= 1;
@@ -51,6 +53,7 @@ function startGame() {
     }
   }, 1000)
 }
+
 
 function timeIsUp() {
   // display time-out container
@@ -65,8 +68,8 @@ function restartGame() {
   document.querySelector('.time-out-container').style.display = 'none';
   document.querySelector('.losing-container').style.display = 'none';
   // reset clock to full time and update the DOM for reload page
-  newGameClock = 8;
-  countdown.innerText = 8;
+  newGameClock = 25;
+  countdown.innerText = 25;
   // reset score to 0 and update the DOM for reload page
   score = 0;
   scoreboard.innerText = 0;
@@ -129,23 +132,24 @@ const trap1 = new trap(Math.floor(Math.random()* (600-100) + 100), Math.floor(Ma
 const trap2 = new trap(Math.floor(Math.random()* (600-100) + 100), Math.floor(Math.random()* (450-100) + 100), 80, 40)
 
 class Cheese {
-    constructor(x, y, width, height) {
+    constructor(x, y, width, height, inPlay) {
         this.x = x
         this.y = y
         this.width = width
         this.height = height
+        this.inPlay = inPlay
     }
     render() {
         // ctx.fillStyle = this.color
         // ctx.fillRect(this.x, this.y, this.width, this.height)
-        ctx.drawImage(cheeseImg, 0, 0, 524, 480, this.x, this.y, this.width, this.height);
+        ctx.drawImage(cheeseImg, 0, 0, 524, 480, this.x, this.y, this.width, this.height, this.inPlay);
     }
 }
 
 // cheese object initiation with random location
-const cheese1 = new Cheese(Math.floor(Math.random()* (600 - 100) + 100), Math.floor(Math.random()* (450-100) + 100), 33, 30);
-const cheese2 = new Cheese(Math.floor(Math.random()* (600 - 100) + 100), Math.floor(Math.random()* (450-100) + 100), 43, 40);
-const cheese3 = new Cheese(Math.floor(Math.random()* (600 - 100) + 100), Math.floor(Math.random()* (450-100) + 100), 28, 26);
+const cheese1 = new Cheese(Math.floor(Math.random()* (600 - 100) + 100), Math.floor(Math.random()* (450-100) + 100), 33, 30, true);
+const cheese2 = new Cheese(Math.floor(Math.random()* (600 - 100) + 100), Math.floor(Math.random()* (450-100) + 100), 43, 40, true);
+const cheese3 = new Cheese(Math.floor(Math.random()* (600 - 100) + 100), Math.floor(Math.random()* (450-100) + 100), 28, 26, true);
 
 // collision detection - borders
 function detectWall() {
@@ -154,22 +158,10 @@ function detectWall() {
     const topWall = mouse.y <= 0
     const bottomWall = mouse.y + mouse.height >= canvas.height
 
-    if (leftWall) {
-        console.log("left wall found")
-        mouse.x = 0
-    }
-    if (rightWall) {
-        console.log("right wall found")
-        mouse.x = canvas.width - mouse.width
-    }
-    if (topWall) {
-        console.log("top wall found")
-        mouse.y = 0
-    }
-    if (bottomWall) {
-        console.log("bottom wall found")
-        mouse.y = canvas.height - mouse.height
-    }
+    if (leftWall) mouse.x = 0;
+    if (rightWall) mouse.x = canvas.width - mouse.width;
+    if (topWall) mouse.y = 0;
+    if (bottomWall) mouse.y = canvas.height - mouse.height;
 }
 
 function foundHome() {
@@ -200,6 +192,9 @@ function foundCheese1() {
   if (cheese1Left && cheese1Right && cheese1Top && cheese1Bottom) {
         score += 1;
         scoreboard.innerText = score;
+        cheese1.inPlay = false;
+        // delayed re-rendering of cheese - made as arrow function to keep clean (one line)
+        setTimeout(() => cheese1.inPlay = true, 1000);
         cheese1.x = Math.floor(Math.random()*490);
         cheese1.y = Math.floor(Math.random()*390);
       }
@@ -214,6 +209,9 @@ function foundCheese2() {
   if (cheese2Left && cheese2Right && cheese2Top && cheese2Bottom) {
         score += 1;
         scoreboard.innerText = score;
+        cheese2.inPlay = false;
+        // delayed re-rendering of cheese
+        setTimeout(() => cheese2.inPlay = true, 1000);
         cheese2.x = Math.floor(Math.random()*490);
         cheese2.y = Math.floor(Math.random()*390);
       }
@@ -228,6 +226,9 @@ function foundCheese3() {
   if (cheese3Left && cheese3Right && cheese3Top && cheese3Bottom) {
         score += 1;
         scoreboard.innerText = score;
+        cheese3.inPlay = false;
+        // delayed re-rendering of cheese
+        setTimeout(() => cheese3.inPlay = true, 1000);
         cheese3.x = Math.floor(Math.random()*490);
         cheese3.y = Math.floor(Math.random()*390);
       }
@@ -240,7 +241,6 @@ function caughtTrap1() {
   const trap1Bottom = mouse.y <= trap1.y + trap1.height - 30;
 
   if (trap1Left && trap1Right && trap1Top && trap1Bottom) {
-    console.log('stuck in the first trap');
     // display lost game div
     document.querySelector('.losing-container').style.display = 'block';
     // stop timer
@@ -257,8 +257,6 @@ function caughtTrap2() {
   const trap2Bottom = mouse.y <= trap2.y + trap2.height - 30;
 
   if (trap2Left && trap2Right && trap2Top && trap2Bottom) {
-    console.log('stuck in the second trap');
-    // display lost game giv
     // display lost game div
     document.querySelector('.losing-container').style.display = 'block';
     // stop timer
@@ -276,14 +274,31 @@ function movementHandler(e) {
     if (e.key === "ArrowUp") mouse.y -= speed
 }
 
+// DIAGONAL MOVEMENT HANDLER ACTING GLITCHY
+// function movementHandler() {
+//   const speed = 20
+//   if (pressedKeys.ArrowLeft) {
+//     mouse.x -= speed
+//   }
+//   if (pressedKeys.ArrowRight) {
+//     mouse.x += speed
+//   }
+//   if (pressedKeys.ArrowDown) {
+//     mouse.y += speed
+//   }
+//   if (pressedKeys.ArrowUp) {
+//     mouse.y -= speed
+//   }
+// }
+
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     mouseHole.render()
     mouse.render()
     // random cheese render
-    cheese1.render()
-    cheese2.render()
-    cheese3.render()
+    if (cheese1.inPlay) cheese1.render()
+    if (cheese2.inPlay) cheese2.render()
+    if (cheese3.inPlay) cheese3.render()
     trap1.render()
     trap2.render()
     foundHome()
