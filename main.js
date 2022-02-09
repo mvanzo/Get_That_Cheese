@@ -10,16 +10,6 @@ document.querySelector('#new-game-button').addEventListener('click', startGame);
 // document.addEventListener('keydown', e => pressedKeys[e.key] = true)
 // document.addEventListener('keyup', e => pressedKeys[e.key] = false)
 
-// images to upload to the canvas
-const mouseImg = new Image();
-  mouseImg.src = '/img/mouse.png';
-const cheeseImg = new Image();
-  cheeseImg.src = '/img/cheese.png';
-const mouseHoleImg = new Image();
-  mouseHoleImg.src = '/img/mouse-hole.png';
-const catImg = new Image();
-  catImg.src = '/img/mean-cat.png';
-
 // set up the renderer
 const ctx = canvas.getContext("2d")
 // set canvas size to be the same as window
@@ -35,75 +25,14 @@ let stopTime = false;
 
 let gameLoopInterval = setInterval(gameLoop, 30)
 
-function startGame() {
-  // mouse inPlay-->cats start moving
-  mouse.inPlay = true;
-  // hide display for home container
-  document.querySelector('.home-container').style.display = 'none';
-  //countdown starts
-  let gameTimer = setInterval(function() {
-    if (stopTime) {
-      clearInterval(gameTimer);
-    } else if (newGameClock == 0) {
-      //end game function when time is out
-      timeIsUp();
-      // stoping counting
-      clearInterval(gameTimer);
-    } else {
-    newGameClock -= 1;
-    countdown.innerText = newGameClock;
-    }
-  }, 1000)
-}
-
-function timeIsUp() {
-  mouse.inPlay = false;
-  // display time-out container
-  document.querySelector('.time-out-container').style.display = 'block';
-  // new game button to start another game -- restart game loop function??
-  document.querySelector('#play-again-button-2').addEventListener('click', restartGame)
-}
-
-function restartGame() {
-  // clear winning-container from screen
-  document.querySelector('.winning-container').style.display = 'none';
-  document.querySelector('.time-out-container').style.display = 'none';
-  document.querySelector('.losing-container').style.display = 'none';
-  // reset clock to full time and update the DOM for reload page
-  newGameClock = 25;
-  countdown.innerText = 25;
-  // reset score to 0 and update the DOM for reload page
-  score = 0;
-  scoreboard.innerText = 0;
-  // move mouse back to start point
-  mouse.inPlay = true;
-  mouse.x = 10;
-  mouse.y = 10;
-  // re-render cheese, and cats
-  cheese1.x = Math.floor(Math.random()* (600-100) + 100);
-  cheese1.y = Math.floor(Math.random()* (450-100) + 100);
-  cheese2.x = Math.floor(Math.random()* (600-100) + 100);
-  cheese2.y = Math.floor(Math.random()* (450-100) + 100);
-  cheese3.x = Math.floor(Math.random()* (600-100) + 100);
-  cheese3.y = Math.floor(Math.random()* (450-100) + 100);
-
-  cat1.x = Math.floor(Math.random()* (600-100) + 100);
-  cat1.y = Math.floor(Math.random()* (450-100) + 100);
-  cat2.x = Math.floor(Math.random()* (600-100) + 100);
-  cat2.y = Math.floor(Math.random()* (450-100) + 100);
-
-  // stopTime set to false so game timer can run again
-  stopTime = false;
-  // run startGame function
-  startGame();
-}
-
 const mouseHole = {
   x: 540,
   y: 410,
   width: 80,
   height: 80,
   render: () => {
+    const mouseHoleImg = new Image();
+    mouseHoleImg.src = '/img/mouse-hole.png';
     ctx.drawImage(mouseHoleImg, 0, 0, 578, 545, mouseHole.x, mouseHole.y, mouseHole.width, mouseHole.height);
   }
 }
@@ -115,6 +44,8 @@ const mouse = {
     height: 62,
     inPlay: false,
     render: () => {
+        const mouseImg = new Image();
+        mouseImg.src = '/img/mouse.png';
         ctx.drawImage(mouseImg, 0, 0, 800, 566, mouse.x, mouse.y, mouse.width, mouse.height);
     }
 }
@@ -131,6 +62,8 @@ class Cat {
     this.dy = 1 * this.speed;
   }
   render() {
+    const catImg = new Image();
+    catImg.src = '/img/mean-cat.png';
     ctx.drawImage(catImg, 0, 0, 887, 572, this.x, this.y, this.width, this.height);
   }
   // moving cats
@@ -176,13 +109,10 @@ class Cheese {
         this.inPlay = inPlay
     }
     render() {
-        // ctx.fillStyle = this.color
-        // ctx.fillRect(this.x, this.y, this.width, this.height)
+        const cheeseImg = new Image();
+        cheeseImg.src = '/img/cheese.png';
         ctx.drawImage(cheeseImg, 0, 0, 524, 480, this.x, this.y, this.width, this.height, this.inPlay);
     }
-    //
-    //
-    //
     foundCheese() {
       const cheeseLeft = mouse.x + mouse.width >= this.x
       const cheeseRight = mouse.x <= this.x + this.width
@@ -207,7 +137,71 @@ const cheese1 = new Cheese(Math.floor(Math.random()* (600 - 100) + 100), Math.fl
 const cheese2 = new Cheese(Math.floor(Math.random()* (600 - 100) + 100), Math.floor(Math.random()* (450-100) + 100), 43, 40, true);
 const cheese3 = new Cheese(Math.floor(Math.random()* (600 - 100) + 100), Math.floor(Math.random()* (450-100) + 100), 28, 26, true);
 
-// collision detection - borders
+// GAME FUNCTIONALITY
+
+function startGame() {
+  // mouse inPlay-->cats start moving
+  mouse.inPlay = true;
+  // hide display for home container
+  document.querySelector('.home-container').style.display = 'none';
+  //countdown starts
+  let gameTimer = setInterval(function() {
+    if (stopTime) {
+      clearInterval(gameTimer);
+    } else if (newGameClock == 0) {
+      //end game function when time is out
+      timeIsUp();
+      // stoping counting
+      clearInterval(gameTimer);
+    } else {
+    newGameClock -= 1;
+    countdown.innerText = newGameClock;
+    }
+  }, 1000)
+}
+
+function restartGame() {
+  // clear winning-container from screen
+  document.querySelector('.winning-container').style.display = 'none';
+  document.querySelector('.time-out-container').style.display = 'none';
+  document.querySelector('.losing-container').style.display = 'none';
+  // reset clock to full time and update the DOM for reload page
+  newGameClock = 25;
+  countdown.innerText = 25;
+  // reset score to 0 and update the DOM for reload page
+  score = 0;
+  scoreboard.innerText = 0;
+  // move mouse back to start point
+  mouse.inPlay = true;
+  mouse.x = 10;
+  mouse.y = 10;
+  // re-render cheese, and cats
+  cheese1.x = Math.floor(Math.random()* (600-100) + 100);
+  cheese1.y = Math.floor(Math.random()* (450-100) + 100);
+  cheese2.x = Math.floor(Math.random()* (600-100) + 100);
+  cheese2.y = Math.floor(Math.random()* (450-100) + 100);
+  cheese3.x = Math.floor(Math.random()* (600-100) + 100);
+  cheese3.y = Math.floor(Math.random()* (450-100) + 100);
+
+  cat1.x = Math.floor(Math.random()* (600-100) + 100);
+  cat1.y = Math.floor(Math.random()* (450-100) + 100);
+  cat2.x = Math.floor(Math.random()* (600-100) + 100);
+  cat2.y = Math.floor(Math.random()* (450-100) + 100);
+
+  // stopTime set to false so game timer can run again
+  stopTime = false;
+  // run startGame function
+  startGame();
+}
+
+function timeIsUp() {
+  mouse.inPlay = false;
+  // display time-out container
+  document.querySelector('.time-out-container').style.display = 'block';
+  // new game button to start another game -- restart game loop function??
+  document.querySelector('#play-again-button-2').addEventListener('click', restartGame)
+}
+
 function detectWall() {
     const leftWall = mouse.x <= 0
     const rightWall = mouse.x + mouse.width >= canvas.width
