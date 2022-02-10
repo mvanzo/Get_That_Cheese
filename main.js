@@ -1,14 +1,11 @@
 // DOM SELECTORS - EVENT LISTENERS
 const canvas = document.querySelector("#canvas");
-document.addEventListener("keydown", movementHandler);
 const scoreboard = document.querySelector("#scoreboard");
 const countdown = document.querySelector('#countdown');
 document.querySelector('#new-game-button').addEventListener('click', startGame);
 
-// DIAGONAL MOVEMENT ACTING GLITCHY
-// const pressedKeys = { }
-// document.addEventListener('keydown', e => pressedKeys[e.key] = true)
-// document.addEventListener('keyup', e => pressedKeys[e.key] = false)
+//movement handler
+const pressedKeys = { }
 
 // set up the renderer
 const ctx = canvas.getContext("2d")
@@ -21,21 +18,10 @@ canvas.setAttribute("width", getComputedStyle(canvas)["width"])
 let newGameClock = 25
   countdown.innerText = newGameClock
 let score = 0;
+let highScore = 0;
 let stopTime = false;
 
 let gameLoopInterval = setInterval(gameLoop, 30)
-
-const mouseHole = {
-  x: 540,
-  y: 410,
-  width: 80,
-  height: 80,
-  render: () => {
-    const mouseHoleImg = new Image();
-    mouseHoleImg.src = './img/mouse-hole.png';
-    ctx.drawImage(mouseHoleImg, 0, 0, 578, 545, mouseHole.x, mouseHole.y, mouseHole.width, mouseHole.height);
-  }
-}
 
 const mouse = {
     x: 10,
@@ -46,6 +32,7 @@ const mouse = {
     render: () => {
         const mouseImg = new Image();
         mouseImg.src = './img/mouse.png';
+        mouseImg.alt = 'mouse image'
         ctx.drawImage(mouseImg, 0, 0, 800, 566, mouse.x, mouse.y, mouse.width, mouse.height);
     }
 }
@@ -79,10 +66,10 @@ class Cat {
   }
   // collision detection
   caught() {
-    const catLeft = mouse.x + mouse.width >= this.x + 20;
-    const catRight = mouse.x <= this.x + this.width - 25;
-    const catTop = mouse.y + mouse.height >= this.y + 20;
-    const catBottom = mouse.y <= this.y + this.height - 20;
+    const catLeft = mouse.x + mouse.width >= this.x + 40;
+    const catRight = mouse.x <= this.x + this.width - 45;
+    const catTop = mouse.y + mouse.height >= this.y + 40;
+    const catBottom = mouse.y <= this.y + this.height - 40;
   
     if (catLeft && catRight && catTop && catBottom) {
       // display lost game div
@@ -97,8 +84,8 @@ class Cat {
   }
 }
 
-const cat1 = new Cat(Math.floor(Math.random()* (525-150) + 150), Math.floor(Math.random()* (400-150) + 150), 100, 64, 1)
-const cat2 = new Cat(Math.floor(Math.random()* (525-150) + 150), Math.floor(Math.random()* (400-150) + 150), 100, 64, -1)
+const cat1 = new Cat(Math.floor(Math.random()* (250-150) + 150), Math.floor(Math.random()* (250-150) + 150), 150, 96, 2);
+const cat2 = new Cat(Math.floor(Math.random()* (250-150) + 150), Math.floor(Math.random()* (250-150) + 150), 150, 96, -2);
 
 class Cheese {
     constructor(x, y, width, height, inPlay) {
@@ -137,11 +124,40 @@ const cheese1 = new Cheese(Math.floor(Math.random()* (600 - 100) + 100), Math.fl
 const cheese2 = new Cheese(Math.floor(Math.random()* (600 - 100) + 100), Math.floor(Math.random()* (450-100) + 100), 43, 40, true);
 const cheese3 = new Cheese(Math.floor(Math.random()* (600 - 100) + 100), Math.floor(Math.random()* (450-100) + 100), 28, 26, true);
 
+const mouseHole = {
+  x: 540,
+  y: 410,
+  width: 80,
+  height: 80,
+  render: () => {
+    const mouseHoleImg = new Image();
+    mouseHoleImg.src = './img/mouse-hole.png';
+    ctx.drawImage(mouseHoleImg, 0, 0, 578, 545, mouseHole.x, mouseHole.y, mouseHole.width, mouseHole.height);
+  }
+}
+
 // GAME FUNCTIONALITY
+function movementHandler() {
+  document.addEventListener('keydown', e => pressedKeys[e.key] = true);
+  document.addEventListener('keyup', e => pressedKeys[e.key] = false);
+  const speed = 4
+  if (pressedKeys.ArrowLeft) {
+    mouse.x -= speed
+  }
+  if (pressedKeys.ArrowRight) {
+    mouse.x += speed
+  }
+  if (pressedKeys.ArrowDown) {
+    mouse.y += speed
+  }
+  if (pressedKeys.ArrowUp) {
+    mouse.y -= speed
+  }
+}
 
 function startGame() {
   // mouse inPlay-->cats start moving
-  mouse.inPlay = true;
+  setTimeout(() => mouse.inPlay = true, 800);
   // hide display for home container
   document.querySelector('.home-container').style.display = 'none';
   //countdown starts
@@ -172,7 +188,7 @@ function restartGame() {
   score = 0;
   scoreboard.innerText = 0;
   // move mouse back to start point
-  mouse.inPlay = true;
+  setTimeout(() => mouse.inPlay = true, 800);
   mouse.x = 10;
   mouse.y = 10;
   // re-render cheese, and cats
@@ -229,41 +245,18 @@ function foundHome() {
     document.querySelector('.winning-container').style.display = 'block';
     // show score from previous round
     document.querySelector('#final-tally').innerText = score;
+    // high score
+    document.querySelector('#high-score').innerText = highScore
+    if (score >= highScore) highScore = score;
     // new game button to start another game
     document.querySelector('#play-again-button').addEventListener('click', restartGame)
   }
 }
 
-function movementHandler(e) {
-    const speed = 20
-    if (e.key === "ArrowLeft") mouse.x -= speed
-    if (e.key === "ArrowRight") mouse.x += speed
-    if (e.key === "ArrowDown") mouse.y += speed
-    if (e.key === "ArrowUp") mouse.y -= speed
-}
-
-// DIAGONAL MOVEMENT HANDLER ACTING GLITCHY
-// function movementHandler() {
-//   const speed = 20
-//   if (pressedKeys.ArrowLeft) {
-//     mouse.x -= speed
-//   }
-//   if (pressedKeys.ArrowRight) {
-//     mouse.x += speed
-//   }
-//   if (pressedKeys.ArrowDown) {
-//     mouse.y += speed
-//   }
-//   if (pressedKeys.ArrowUp) {
-//     mouse.y -= speed
-//   }
-// }
-
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     mouseHole.render()
     mouse.render()
-    // random cheese render
     if (cheese1.inPlay) cheese1.render()
     if (cheese2.inPlay) cheese2.render()
     if (cheese3.inPlay) cheese3.render()
@@ -278,4 +271,5 @@ function gameLoop() {
     cheese1.foundCheese()
     cheese2.foundCheese()
     cheese3.foundCheese()
+    movementHandler()
 }
