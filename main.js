@@ -32,7 +32,7 @@ const mouseHole = {
   height: 80,
   render: () => {
     const mouseHoleImg = new Image();
-    mouseHoleImg.src = '/img/mouse-hole.png';
+    mouseHoleImg.src = './img/mouse-hole.png';
     ctx.drawImage(mouseHoleImg, 0, 0, 578, 545, mouseHole.x, mouseHole.y, mouseHole.width, mouseHole.height);
   }
 }
@@ -45,7 +45,7 @@ const mouse = {
     inPlay: false,
     render: () => {
         const mouseImg = new Image();
-        mouseImg.src = '/img/mouse.png';
+        mouseImg.src = './img/mouse.png';
         ctx.drawImage(mouseImg, 0, 0, 800, 566, mouse.x, mouse.y, mouse.width, mouse.height);
     }
 }
@@ -63,7 +63,7 @@ class Cat {
   }
   render() {
     const catImg = new Image();
-    catImg.src = '/img/mean-cat.png';
+    catImg.src = './img/mean-cat.png';
     ctx.drawImage(catImg, 0, 0, 887, 572, this.x, this.y, this.width, this.height);
   }
   // moving cats
@@ -110,7 +110,7 @@ class Cheese {
     }
     render() {
         const cheeseImg = new Image();
-        cheeseImg.src = '/img/cheese.png';
+        cheeseImg.src = './img/cheese.png';
         ctx.drawImage(cheeseImg, 0, 0, 524, 480, this.x, this.y, this.width, this.height, this.inPlay);
     }
     foundCheese() {
