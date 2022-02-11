@@ -9,18 +9,18 @@
 </head>
 <body>
 
+<div class="total-container">
     <div class="home-container">
         <div class='header'>Get That Cheese</div>
         <div>
-            <p>It's night and the humans have gone to bed. You're a mouse and you're hungry for cheese crumbles, which the messy homeowners have dropped all over their floor. Go get it! <br><br> Use the arrow keys to pick up as many pieces of cheese as you can, but be sure to get back to your mouse hole before the time runs out and watch out for cats!</p>
-            <button id='new-game-button'>Starts Game</button>
+            <p>It's night and the humans have gone to bed. You're a mouse and you're hungry for cheese crumbles, which the messy homeowners have dropped all over their floor. Go get it! <br><br> Use the arrow keys to pick up as many pieces of cheese as you can, but watch out for cats and be sure to get back to your mouse hole before the time runs out!</p>
+            <button id='new-game-button'>Start Game</button>
         </div>
     </div>
     
     <div class="winning-container">
         <div class='header'>Good eats!</div>
             <p>You collected <span id="final-tally"></span> piece(s) of cheese! YUM</p>
-            <div>High Score: <span id="high-score"></span></div>
             <button id='play-again-button'>Play Again</button>
         </div>
     </div>
@@ -38,6 +38,7 @@
             <button id='play-again-button-3'>Try Again</button>
         </div>
     </div>
+</div>
 
     <h1>Get That Cheese</h1>
 
@@ -46,8 +47,9 @@
             <canvas id="canvas"></canvas>
         </main>
         <div class="score-container">
-            <div>Cheese Gobbled: <span id="scoreboard">0</div>
             <div>Time Left: <span id="countdown"></span></div>
+            <div>Cheese Found: <span id="scoreboard">0</div>
+            <div>High Score: <span id="high-score"></span></div>
         </div>
     </div>
     

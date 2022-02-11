@@ -84,8 +84,8 @@ class Cat {
   }
 }
 
-const cat1 = new Cat(Math.floor(Math.random()* (250-150) + 150), Math.floor(Math.random()* (250-150) + 150), 150, 96, 2);
-const cat2 = new Cat(Math.floor(Math.random()* (250-150) + 150), Math.floor(Math.random()* (250-150) + 150), 150, 96, -2);
+const cat1 = new Cat(Math.floor(Math.random()* (450-150) + 150), Math.floor(Math.random()* (300-150) + 150), 150, 96, 4);
+const cat2 = new Cat(Math.floor(Math.random()* (450-150) + 150), Math.floor(Math.random()* (300-150) + 150), 150, 96, -3);
 
 class Cheese {
     constructor(x, y, width, height, inPlay) {
@@ -137,7 +137,7 @@ const mouseHole = {
 }
 
 // GAME FUNCTIONALITY
-function movementHandler() {
+function moveMouse() {
   document.addEventListener('keydown', e => pressedKeys[e.key] = true);
   document.addEventListener('keyup', e => pressedKeys[e.key] = false);
   const speed = 4
@@ -157,7 +157,7 @@ function movementHandler() {
 
 function startGame() {
   // mouse inPlay-->cats start moving
-  setTimeout(() => mouse.inPlay = true, 800);
+  setTimeout(() => mouse.inPlay = true, 1000);
   // hide display for home container
   document.querySelector('.home-container').style.display = 'none';
   //countdown starts
@@ -199,10 +199,10 @@ function restartGame() {
   cheese3.x = Math.floor(Math.random()* (600-100) + 100);
   cheese3.y = Math.floor(Math.random()* (450-100) + 100);
 
-  cat1.x = Math.floor(Math.random()* (600-100) + 100);
-  cat1.y = Math.floor(Math.random()* (450-100) + 100);
-  cat2.x = Math.floor(Math.random()* (600-100) + 100);
-  cat2.y = Math.floor(Math.random()* (450-100) + 100);
+  cat1.x = Math.floor(Math.random()* (450-100) + 100);
+  cat1.y = Math.floor(Math.random()* (300-100) + 100);
+  cat2.x = Math.floor(Math.random()* (450-100) + 100);
+  cat2.y = Math.floor(Math.random()* (300-100) + 100);
 
   // stopTime set to false so game timer can run again
   stopTime = false;
@@ -255,21 +255,21 @@ function foundHome() {
 
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    mouseHole.render()
-    mouse.render()
-    if (cheese1.inPlay) cheese1.render()
-    if (cheese2.inPlay) cheese2.render()
-    if (cheese3.inPlay) cheese3.render()
-    cat1.render()
-    cat2.render()
-    if (mouse.inPlay) cat1.move()
-    if (mouse.inPlay) cat2.move()
-    cat1.caught()
-    cat2.caught()
-    foundHome()
-    detectWall()
-    cheese1.foundCheese()
-    cheese2.foundCheese()
-    cheese3.foundCheese()
-    movementHandler()
+    mouseHole.render();
+    mouse.render();
+    if (cheese1.inPlay) cheese1.render();
+    if (cheese2.inPlay) cheese2.render();
+    if (cheese3.inPlay) cheese3.render();
+    cat1.render();
+    cat2.render();
+    if (mouse.inPlay) cat1.move();
+    if (mouse.inPlay) cat2.move();
+    cat1.caught();
+    cat2.caught();
+    foundHome();
+    detectWall();
+    cheese1.foundCheese();
+    cheese2.foundCheese();
+    cheese3.foundCheese();
+    moveMouse();
 }

@@ -31,7 +31,7 @@ canvas {
 
 p {
     font-size: 18px;
-    margin: 25px;
+    margin: 35px;
 }
 
 button {
@@ -46,6 +46,7 @@ button {
 
 button:hover {
     background-color: #36374d;
+    color: var(--secondary-color);
 }
 
 #container {
@@ -64,9 +65,9 @@ button:hover {
     position: absolute;
     top: 41%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -53%);
     width: 700px;
-    height: 520px;
+    height: 550px;
     background-color: grey;
     background-color: var(--secondary-color);
     font-family: var(--secondary-font);
@@ -74,24 +75,22 @@ button:hover {
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    gap: 50px;
-    /* position: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; */
 }
 
 .winning-container {
-    display: none;
     position: absolute;
     top: 41%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -53%);
     width: 700px;
-    height: 520px;
+    height: 550px;
     background-color: var(--secondary-color);
     font-family: var(--secondary-font);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: center;
+    display: none;
 }
 
 .time-out-container {
@@ -99,9 +98,9 @@ button:hover {
     position: absolute;
     top: 41%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -53%);
     width: 700px;
-    height: 520px;
+    height: 550px;
     background-color: var(--secondary-color);
     font-family: var(--secondary-font);
     text-align: center;
@@ -112,9 +111,9 @@ button:hover {
     position: absolute;
     top: 41%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -53%);
     width: 700px;
-    height: 520px;
+    height: 550px;
     background-color: var(--secondary-color);
     font-family: var(--secondary-font);
     text-align: center;
@@ -122,11 +121,48 @@ button:hover {
 
 .header {
     font-size: 50px;
-    margin-bottom: 60px;
+    margin: 60px;
 }
 
 .score-container {
-    text-align: center;
+    /* text-align: center; */
+    width: 625px;
+    border: 3px solid var(--secondary-color);
     margin-top: 15px;
     font-size: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    gap: 15px
+}
+
+@media (max-height: 800px) {
+    .home-container{
+        position: absolute;
+        top: 41%;
+        left: 50%;
+        transform: translate(-50%, -38%);
+    }    
+
+    .winning-container{
+        position: absolute;
+        top: 41%;
+        left: 50%;
+        transform: translate(-50%, -38%);
+    }  
+
+    .losing-container{
+        position: absolute;
+        top: 41%;
+        left: 50%;
+        transform: translate(-50%, -38%);
+    }  
+
+    .time-out-container{
+        position: absolute;
+        top: 41%;
+        left: 50%;
+        transform: translate(-50%, -38%);
+    }  
 }
