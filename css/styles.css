@@ -62,7 +62,7 @@ button:hover {
     position: absolute;
     top: 41%;
     left: 50%;
-    transform: translate(-50%, -53%);
+    transform: translate(-50%, -48%);
     width: 700px;
     height: 550px;
     background-color: grey;
@@ -78,7 +78,7 @@ button:hover {
     position: absolute;
     top: 41%;
     left: 50%;
-    transform: translate(-50%, -53%);
+    transform: translate(-50%, -48%);
     width: 700px;
     height: 550px;
     background-color: var(--secondary-color);
@@ -95,7 +95,7 @@ button:hover {
     position: absolute;
     top: 41%;
     left: 50%;
-    transform: translate(-50%, -53%);
+    transform: translate(-50%, -48%);
     width: 700px;
     height: 550px;
     background-color: var(--secondary-color);
@@ -108,7 +108,7 @@ button:hover {
     position: absolute;
     top: 41%;
     left: 50%;
-    transform: translate(-50%, -53%);
+    transform: translate(-50%, -48%);
     width: 700px;
     height: 550px;
     background-color: var(--secondary-color);
