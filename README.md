@@ -47,3 +47,6 @@ Using the arrow controls on your keyboard, move the mouse to pick up as many che
 * CSS
 * Javascript
 * Canvas
+
+# Link to Play
+* https://mvanzo.github.io/Get_That_Cheese/
