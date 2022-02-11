@@ -4,24 +4,18 @@ const scoreboard = document.querySelector("#scoreboard");
 const countdown = document.querySelector('#countdown');
 document.querySelector('#new-game-button').addEventListener('click', startGame);
 
-//movement handler
-const pressedKeys = { }
-
-// set up the renderer
-const ctx = canvas.getContext("2d")
-// set canvas size to be the same as window
-// WHAT IS THIS -- after the window computes -- set canvas to be actual size of space it takes up
 canvas.setAttribute("height", getComputedStyle(canvas)["height"])
 canvas.setAttribute("width", getComputedStyle(canvas)["width"])
 
 // variable state
-let newGameClock = 25
-  countdown.innerText = newGameClock
+const ctx = canvas.getContext("2d")
+const pressedKeys = {}
+let newGameClock = 25;
+countdown.innerText = newGameClock;
 let score = 0;
 let highScore = 0;
 let stopTime = false;
-
-let gameLoopInterval = setInterval(gameLoop, 30)
+let gameLoopInterval = setInterval(gameLoop, 30);
 
 const mouse = {
     x: 10,
@@ -32,7 +26,7 @@ const mouse = {
     render: () => {
         const mouseImg = new Image();
         mouseImg.src = './img/mouse.png';
-        mouseImg.alt = 'mouse image'
+        mouseImg.alt = 'mouse image';
         ctx.drawImage(mouseImg, 0, 0, 800, 566, mouse.x, mouse.y, mouse.width, mouse.height);
     }
 }
@@ -84,8 +78,8 @@ class Cat {
   }
 }
 
-const cat1 = new Cat(Math.floor(Math.random()* (450-150) + 150), Math.floor(Math.random()* (300-150) + 150), 150, 96, 4);
-const cat2 = new Cat(Math.floor(Math.random()* (450-150) + 150), Math.floor(Math.random()* (300-150) + 150), 150, 96, -3);
+const cat1 = new Cat(Math.floor(Math.random()* (450-150) + 150), Math.floor(Math.random()* (300-150) + 150), 150, 96, 4.5);
+const cat2 = new Cat(Math.floor(Math.random()* (450-150) + 150), Math.floor(Math.random()* (300-150) + 150), 150, 96, -3.5);
 
 class Cheese {
     constructor(x, y, width, height, inPlay) {
@@ -101,10 +95,10 @@ class Cheese {
         ctx.drawImage(cheeseImg, 0, 0, 524, 480, this.x, this.y, this.width, this.height, this.inPlay);
     }
     foundCheese() {
-      const cheeseLeft = mouse.x + mouse.width >= this.x
-      const cheeseRight = mouse.x <= this.x + this.width
-      const cheeseTop = mouse.y + mouse.height >= this.y
-      const cheeseBottom = mouse.y <= this.y + this.height
+      const cheeseLeft = mouse.x + mouse.width >= this.x + 20;
+      const cheeseRight = mouse.x <= this.x + this.width -20;
+      const cheeseTop = mouse.y + mouse.height >= this.y + 20;
+      const cheeseBottom = mouse.y <= this.y + this.height -20;
     
       if (cheeseLeft && cheeseRight && cheeseTop && cheeseBottom) {
             score += 1;
@@ -156,10 +150,10 @@ function moveMouse() {
 }
 
 function startGame() {
-  // mouse inPlay-->cats start moving
-  setTimeout(() => mouse.inPlay = true, 1000);
   // hide display for home container
   document.querySelector('.home-container').style.display = 'none';
+  // mouse inPlay-->cats start moving after 1 second
+  setTimeout(() => mouse.inPlay = true, 1000);
   //countdown starts
   let gameTimer = setInterval(function() {
     if (stopTime) {
@@ -167,7 +161,7 @@ function startGame() {
     } else if (newGameClock == 0) {
       //end game function when time is out
       timeIsUp();
-      // stoping counting
+      // stop time counting
       clearInterval(gameTimer);
     } else {
     newGameClock -= 1;
