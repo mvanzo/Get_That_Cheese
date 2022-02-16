@@ -74,6 +74,8 @@ class Cat {
       document.querySelector('#play-again-button-3').addEventListener('click', restartGame)
       // mouse not in play --> cats stop moving
       mouse.inPlay = false;
+      // document high score
+      document.querySelector('#high-score-lost').innerText = highScore;
     }
   }
 }
@@ -149,6 +151,18 @@ function moveMouse() {
   }
 }
 
+function detectWall() {
+  const leftWall = mouse.x <= 0
+  const rightWall = mouse.x + mouse.width >= canvas.width
+  const topWall = mouse.y <= 0
+  const bottomWall = mouse.y + mouse.height >= canvas.height
+
+  if (leftWall) mouse.x = 0;
+  if (rightWall) mouse.x = canvas.width - mouse.width;
+  if (topWall) mouse.y = 0;
+  if (bottomWall) mouse.y = canvas.height - mouse.height;
+}
+
 function startGame() {
   // hide display for home container
   document.querySelector('.home-container').style.display = 'none';
@@ -209,19 +223,9 @@ function timeIsUp() {
   // display time-out container
   document.querySelector('.time-out-container').style.display = 'block';
   // new game button to start another game -- restart game loop function??
-  document.querySelector('#play-again-button-2').addEventListener('click', restartGame)
-}
-
-function detectWall() {
-    const leftWall = mouse.x <= 0
-    const rightWall = mouse.x + mouse.width >= canvas.width
-    const topWall = mouse.y <= 0
-    const bottomWall = mouse.y + mouse.height >= canvas.height
-
-    if (leftWall) mouse.x = 0;
-    if (rightWall) mouse.x = canvas.width - mouse.width;
-    if (topWall) mouse.y = 0;
-    if (bottomWall) mouse.y = canvas.height - mouse.height;
+  document.querySelector('#play-again-button-2').addEventListener('click', restartGame);
+  // high score maintained
+  document.querySelector('#high-score-time').innerText = highScore;
 }
 
 function foundHome() {
@@ -240,10 +244,10 @@ function foundHome() {
     // show score from previous round
     document.querySelector('#final-tally').innerText = score;
     // high score
-    document.querySelector('#high-score').innerText = highScore
+    document.querySelector('#high-score-won').innerText = highScore;
     if (score >= highScore) highScore = score;
     // new game button to start another game
-    document.querySelector('#play-again-button').addEventListener('click', restartGame)
+    document.querySelector('#play-again-button').addEventListener('click', restartGame);
   }
 }
 

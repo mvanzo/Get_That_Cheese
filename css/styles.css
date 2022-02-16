@@ -28,18 +28,23 @@ canvas {
     border: 5px solid var(--secondary-color);
 }
 
+.header {
+    font-size: 70px;
+    margin: 60px;
+}
+
 p {
-    font-size: 18px;
+    font-size: 26px;
     margin: 35px;
 }
 
 button {
-    height: 60px;
-    width: 220px;
+    height: 90px;
+    width: 340px;
     font-family: var(--primary-font);
-    color: lightgray;
-    font-size: 27px;
-    background-color: var(--primary-color);
+    color: black;
+    font-size: 40px;
+    background-color: var(--secondary-color);
     border-radius: 8px;
 }
 
@@ -62,12 +67,13 @@ button:hover {
     position: absolute;
     top: 41%;
     left: 50%;
-    transform: translate(-50%, -53%);
+    transform: translate(-50%, -45%);
     width: 700px;
-    height: 550px;
+    height: 800px;
     background-color: grey;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     font-family: var(--secondary-font);
+    border: 5px solid var(--secondary-color);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -78,11 +84,12 @@ button:hover {
     position: absolute;
     top: 41%;
     left: 50%;
-    transform: translate(-50%, -53%);
+    transform: translate(-50%, -45%);
     width: 700px;
-    height: 550px;
-    background-color: var(--secondary-color);
+    height: 800px;
+    background-color: var(--primary-color);
     font-family: var(--secondary-font);
+    border: 5px solid var(--secondary-color);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -95,11 +102,12 @@ button:hover {
     position: absolute;
     top: 41%;
     left: 50%;
-    transform: translate(-50%, -53%);
+    transform: translate(-50%, -45%);
     width: 700px;
-    height: 550px;
-    background-color: var(--secondary-color);
+    height: 800px;
+    background-color: var(--primary-color);
     font-family: var(--secondary-font);
+    border: 5px solid var(--secondary-color);
     text-align: center;
 }
 
@@ -108,17 +116,13 @@ button:hover {
     position: absolute;
     top: 41%;
     left: 50%;
-    transform: translate(-50%, -53%);
+    transform: translate(-50%, -45%);
     width: 700px;
-    height: 550px;
-    background-color: var(--secondary-color);
+    height: 800px;
+    background-color: var(--primary-color);
     font-family: var(--secondary-font);
+    border: 5px solid var(--secondary-color);
     text-align: center;
-}
-
-.header {
-    font-size: 50px;
-    margin: 60px;
 }
 
 .score-container {
@@ -138,27 +142,28 @@ button:hover {
         position: absolute;
         top: 41%;
         left: 50%;
-        transform: translate(-50%, -38%);
+        transform: translate(-50%, -41%);
+        height: 740px;
     }    
 
     .winning-container{
         position: absolute;
         top: 41%;
         left: 50%;
-        transform: translate(-50%, -38%);
-    }  
+        transform: translate(-50%, -41%);
+        height: 740px;    }  
 
     .losing-container{
         position: absolute;
         top: 41%;
         left: 50%;
-        transform: translate(-50%, -38%);
-    }  
+        transform: translate(-50%, -41%);
+        height: 740px;    }  
 
     .time-out-container{
         position: absolute;
         top: 41%;
         left: 50%;
-        transform: translate(-50%, -38%);
-    }  
+        transform: translate(-50%, -41%);
+        height: 740px;    }  
 }
